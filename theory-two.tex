@@ -8,6 +8,7 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{titlesec}
+\usepackage{booktabs} % For professional tables
 
 % --- Page Configuration ---
 \geometry{margin=1in}
@@ -18,7 +19,7 @@
 \newcommand{\Hspace}{\mathbb{H}}
 \newcommand{\Rspace}{\mathbb{R}}
 \newcommand{\quatLog}{\ln_{\mathbb{H}}}
-\newcommand{\quatExp}{\exp_{\mathbb{H}}}
+\newcommand{\quatExp}{\exp_{\mathbb{H}}    }
 \newcommand{\Dirac}{\mathcal{D}}
 
 % --- Document Metadata ---
@@ -43,12 +44,29 @@ A Hyperkähler manifold $(M, g)$ is characterized by a triplet of anticommuting 
 \begin{equation}
 I^2 = J^2 = K^2 = IJK = -1
 \end{equation}
-The metric $g$ is compatible with these structures, ensuring that parallel transport preserves the internal phase relationships of the signal. The energy of the quaternionic time series is thus preserved across three orthogonal complex planes simultaneously.
+The metric $g$ is compatible with these structures, ensuring that parallel transport preserves the internal phase relationships of the signal.
 
 
+
+\section{Performance Comparison}
+The following table summarizes the advantages of the proposed Hyperkähler/Dirac framework over standard Euclidean methods.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Metric} & \textbf{Linear Euclidean} & \textbf{Hyperkähler Dirac} \\ \midrule
+Algebraic Integrity & Fails (Norm Drift) & Preserved (Unit Constraint) \\
+Trajectory Path & Straight (Cuts Sphere) & Geodesic (Follows Curve) \\
+Component Linkage & Independent & Dependent (Dirac-Locked) \\
+Phase Coherence & Lost in High Noise & Maintained via Spinors \\
+Noise Resilience & Accumulative Error & Predictive Filtering \\ \bottomrule
+\end{tabular}
+\caption{Comparative analysis of quaternionic processing methodologies.}
+\end{table}
 
 \section{Log-Euclidean Linearization}
-To apply filtering or spectral analysis, the series must be mapped to a flat tangent space $\mathfrak{so}(3)$. For a unit quaternion $q = \cos(\theta/2) + \mathbf{u}\sin(\theta/2)$, the logarithmic mapping is defined as:
+For a unit quaternion $q = \cos(\theta/2) + \mathbf{u}\sin(\theta/2)$, the logarithmic mapping is:
 \begin{equation}
 \mathbf{v}(t) = \quatLog(q(t)) = \frac{\theta(t)}{2}\mathbf{u}(t)
 \end{equation}
@@ -60,24 +78,19 @@ q(t) = q_1 \quatExp \left( \frac{t-t_1}{t_2-t_1} \quatLog(q_1^{-1} q_2) \right)
 
 
 \section{Dirac Dynamics and Signal Flow}
-The Dirac operator $\Dirac$ governs the differential evolution of the signal on the manifold. It is the first-order operator compatible with the Hyperkähler structure:
+The Dirac operator $\Dirac$ governs the differential evolution of the signal:
 \begin{equation}
 \Dirac = I \nabla_I + J \nabla_J + K \nabla_K
 \end{equation}
-A series is considered "hyperholomorphic" if it satisfies $\Dirac\psi = 0$. This operator captures the "spin" of the signal, ensuring that the components ($i, j, k$) do not decouple under high-frequency noise, thus maintaining phase-coherence.
-
-
+A series is considered "hyperholomorphic" if $\Dirac\psi = 0$. This operator captures the "spin" of the signal, ensuring that the components do not decouple under noise.
 
 \section{Conclusion}
-The integration of log-Euclidean mappings with Dirac dynamics on Hyperkähler manifolds provides a framework that is both computationally efficient and geometrically rigorous. This approach prevents numerical instability and provides a natural language for the complex phase behaviors of 4D time series.
+The integration of log-Euclidean mappings with Dirac dynamics provides a framework that is both computationally efficient and geometrically rigorous, preventing numerical instability in 4D time series.
 
-% --- Bibliography ---
 \begin{thebibliography}{99}
 \bibitem{dantam2020} N. T. Dantam, "Practical Exponential Coordinates Using Implicit Dual Quaternions," \textit{Springer}, 2020.
 \bibitem{hitchin1987} N. J. Hitchin et al., "Hyperkähler metrics and supersymmetry," \textit{Comm. Math. Phys.}, 1987.
-\bibitem{mazzotti2012} A. Mazzotti et al., "Application of quaternion algorithms for multicomponent data analysis," \textit{Int. Geophys. Conf.}, 2012.
 \bibitem{parker2023} J. Parker et al., "Logarithm-based methods for interpolating quaternion time series," \textit{Mathematics}, 2023.
-\bibitem{szczesna2019} A. Szczęsna, "Quaternion Entropy for Analysis of Gait Data," \textit{Entropy}, 2019.
 \end{thebibliography}
 
 \end{document}
