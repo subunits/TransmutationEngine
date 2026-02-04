@@ -32,11 +32,11 @@
 \maketitle
 
 \begin{abstract}
-This paper establishes a unified framework for the analysis of time series on quaternionic vector spaces. Traditional Euclidean treatments of 4D signals fail to preserve the topological constraints of the 3-sphere ($S^3$). By utilizing the Hyperkähler structure of quaternionic space, we derive a log-Euclidean framework for trajectory linearization. Furthermore, we introduce the Dirac operator as the governing differential mechanism for hyperholomorphic signal flow, ensuring phase-coherence and geometric integrity in high-dimensional state estimation.
+This paper establishes a unified framework for the analysis of time series on quaternionic vector spaces. Traditional Euclidean treatments of 4D signals fail to preserve the topological constraints of the 3-sphere ($S^{3}$). By utilizing the Hyperkähler structure of quaternionic space, we derive a log-Euclidean framework for trajectory linearization. Furthermore, we introduce the Dirac operator as the governing differential mechanism for hyperholomorphic signal flow, ensuring phase-coherence and geometric integrity in high-dimensional state estimation.
 \end{abstract}
 
 \section{Trajectory Curvature and Vector Constraints}
-In multi-dimensional time series, the assumption of a Euclidean metric frequently leads to "norm drift" in signals representing orientations or phases. When processing quaternionic data $\mathbf{q}(t)$, standard linear arithmetic violates the unit-norm constraint of $S^3$. We resolve this by treating the series as a trajectory on a \textit{Hyperkähler manifold}, where algebraic constraints are embedded in the metric itself.
+In multi-dimensional time series, the assumption of a Euclidean metric frequently leads to "norm drift" in signals representing orientations or phases. When processing quaternionic data $\mathbf{q}(t)$, standard linear arithmetic violates the unit-norm constraint of $S^{3}$. We resolve this by treating the series as a trajectory on a \textit{Hyperkähler manifold}, where algebraic constraints are embedded in the metric itself.
 
 \section{The Hyperkähler Metric Foundation}
 A Hyperkähler manifold $(M, g)$ is characterized by a triplet of anticommuting complex structures $\{I, J, K\}$ satisfying the quaternionic identity:
@@ -52,7 +52,7 @@ To apply filtering or spectral analysis, the series must be mapped to a flat tan
 \begin{equation}
 \mathbf{v}(t) = \quatLog(q(t)) = \frac{\theta(t)}{2}\mathbf{u}(t)
 \end{equation}
-This linearizes the trajectory into $\Rspace^3$. Geodesic evolution (Slerp) between states $q_1$ and $q_2$ follows a "straight line" within this linearized space:
+This linearizes the trajectory into $\Rspace^{3}$. Geodesic evolution between states $q_{1}$ and $q_{2}$ follows a "straight line" within this linearized space via Spherical Linear Interpolation (Slerp):
 \begin{equation}
 q(t) = q_1 \quatExp \left( \frac{t-t_1}{t_2-t_1} \quatLog(q_1^{-1} q_2) \right)
 \end{equation}
