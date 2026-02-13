@@ -20,23 +20,27 @@
 % --- Code Highlighting Setup ---
 \definecolor{haskellpurple}{rgb}{0.5, 0, 0.5}
 \definecolor{haskellblue}{rgb}{0, 0, 0.7}
-\definecolor{bgcode}{rgb}{0.97, 0.97, 0.97}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 \lstset{
-    backgroundcolor=\color{bgcode},
-    basicstyle=\ttfamily\small,
-    breaklines=true,
-    captionpos=b,
+    backgroundcolor=\color{backcolour},   
     commentstyle=\color{gray},
     keywordstyle=\color{haskellpurple}\bfseries,
-    stringstyle=\color{haskellblue},
-    numbers=left,
     numberstyle=\tiny\color{gray},
-    stepnumber=1,
+    stringstyle=\color{haskellblue},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
     tabsize=2,
     language=Haskell,
-    frame=single,
-    rulecolor=\color{black!20}
+    frame=single
 }
 
 % --- Title ---
@@ -49,94 +53,85 @@
 \maketitle
 
 \begin{abstract}
-This paper outlines the implementation of a functional hardware emulator designed to model Heisenberg-style non-commutative logic. Using Haskell, we demonstrate a decoupled three-stage pipeline where data transitions through a simulated hardware bus. The system successfully validates the preservation of unitary amplitude across phase-shifted registers using quaternion Hamilton products.
+This paper presents a modular hardware emulator implemented in Haskell. We demonstrate a decoupled pipeline simulating a Heisenberg commutator $[p, q]$ through quaternion algebra. By utilizing a file-based data bus, the system successfully subjects the quantum state to unitary time-evolution while maintaining constant amplitude, providing a robust architecture for non-commutative logic simulation.
 \end{abstract}
 
 \section{Introduction}
-In quantum computational architectures, the separation of signal generation, logic processing, and measurement is fundamental. This project simulates these discrete hardware components via a file-based I/O system, ensuring that the mathematical state remains consistent throughout asynchronous execution cycles. By leveraging the algebraic properties of quaternions, we create a robust environment for testing non-commutative operators.
+Modern quantum-classical hybrid systems require a rigorous separation of signal control and logical processing. This project implements a functional hardware model consisting of a Control Unit (Clock), an Arithmetic Logic Unit (Heisenberg), and a Measurement Unit (Observer).
 
-\section{Methodology}
-The simulator utilizes Quaternions ($\mathbb{H}$) to represent the hardware registers. The advantage of this approach is the inherent non-commutativity of the algebra, which directly mirrors the Heisenberg uncertainty relation $[p, q]$.
+\section{Mathematical Framework}
+The simulation is grounded in Hamilton's quaternions ($\mathbb{H}$). The non-commutativity of the $\mathbf{i, j, k}$ basis is used to model the fundamental commutation relation of quantum mechanics.
 
-\subsection{The Commutator Logic}
-We define the primary registers as pure imaginary units:
-\begin{align}
-p &= 0 + 1\mathbf{i} + 0\mathbf{j} + 0\mathbf{k} \\
-q &= 0 + 0\mathbf{i} + 1\mathbf{j} + 0\mathbf{k}
-\end{align}
-The logic unit calculates the gap (the commutator):
+\subsection{Operator Definitions}
+We define the conjugate variables $p$ and $q$ as pure imaginary units:
 \begin{equation}
-[p, q] = pq - qp = (\mathbf{k}) - (-\mathbf{k}) = 2\mathbf{k}
+p = \mathbf{i}, \quad q = \mathbf{j}
+\end{equation}
+The resulting commutator $[p, q]$ is calculated as:
+\begin{equation}
+[p, q] = pq - qp = \mathbf{k} - (-\mathbf{k}) = 2\mathbf{k}
 \end{equation}
 
-\subsection{Unitary Rotations}
-The clock generates a rotation operator $R$ for a time-step $t$:
+\subsection{Unitary Evolution}
+A rotation operator $R(t)$, representing a unitary gate, is defined as:
 \begin{equation}
 R(t) = \cos\left(\frac{t}{2}\right) + \mathbf{i}\sin\left(\frac{t}{2}\right)
 \end{equation}
-The final bus state is the result of the Hamilton product:
-\begin{equation}
-\Psi_{out} = R(t) \cdot [p, q]
-\end{equation}
+The final state $\Psi$ is the Hamilton product $R(t) \cdot [p, q]$.
 
-\section{Architecture}
-The hardware is abstracted into three functional modules. This modularity allows for "hot-swapping" logic units without reconfiguring the signal generator.
+\section{System Architecture}
+The system architecture follows a linear pipeline (Figure 1). Data is persisted between stages using flat text-file registers to simulate a hardware bus.
 
 
 
-\begin{itemize}
-    \item \textbf{Clock.hs}: Acts as the Control Unit (CU), providing the timing signal.
-    \item \textbf{Heisenberg.hs}: The Arithmetic Logic Unit (ALU), responsible for non-commutative operations.
-    \item \textbf{Observer.hs}: The I/O Unit, responsible for telemetry and state verification.
-\end{itemize}
+\begin{enumerate}
+    \item \textbf{The Clock}: Generates the unitary instruction based on user-defined temporal parameters.
+    \item \textbf{The Heisenberg Unit}: A stateless processor that interprets bus instructions and performs non-commutative multiplication.
+    \item \textbf{The Observer}: A telemetry tool that calculates the Euclidean norm $\| \Psi \|$ to verify conservation of information.
+\end{enumerate}
 
-\section{Data and Results}
-Experimental runs with $t = \pi$ demonstrate that while the state undergoes a full phase transition from the $\mathbf{k}$ register to the $\mathbf{j}$ register, the Euclidean norm (Amplitude) remains invariant at 2.0.
+\section{Results and Discussion}
+Table 1 illustrates the register shift observed at $t = \pi$. The results indicate a 100\% transfer of signal from the $k$-register to the $j$-register, typical of a 180-degree phase rotation in the imaginary plane.
 
 \begin{table}[h]
 \centering
-\begin{tabular}{@{}lll@{}}
+\begin{tabular}{@{}ccc@{}}
 \toprule
-\textbf{Register} & \textbf{Baseline ($t=0$)} & \textbf{Evolved ($t=\pi$)} \\ \midrule
-Real ($r$)        & 0.0                       & 0.0                        \\
-Imag ($i$)        & 0.0                       & 0.0                        \\
-Imag ($j$)        & 0.0                       & -2.0                       \\
-Imag ($k$)        & 2.0                       & 0.0                        \\ \midrule
-\textbf{Amplitude} & \textbf{2.0}              & \textbf{2.0}               \\ \bottomrule
+\textbf{Register} & \textbf{Initial (2.0k)} & \textbf{Final (Phase Shifted)} \\ \midrule
+Real ($r$)        & 0.0                    & 0.0                          \\
+Imag ($i$)        & 0.0                    & 0.0                          \\
+Imag ($j$)        & 0.0                    & -2.0                         \\
+Imag ($k$)        & 2.0                    & 0.0                          \\ \bottomrule
 \end{tabular}
-\caption{Comparison of Bus States during Time Evolution}
+\caption{Register Transformation across the Hardware Bus}
 \end{table}
 
 \section{Conclusion}
-This simulation confirms that file-based modularity is a viable pathway for complex quantum emulation. By separating the mathematical logic from the measurement and signal generation, we have created a scalable framework for future tests involving environmental decoherence and stochastic noise injection.
+The successful execution of the modular pipeline confirms that functional languages like Haskell are ideally suited for emulating non-linear quantum logic. Future iterations will expand the bus to support multi-qubit entanglement simulations.
 
 \begin{thebibliography}{9}
-\bibitem{hamilton} W. R. Hamilton, \textit{Elements of Quaternions}, Longmans, Green \& Co., 1866.
-\bibitem{heisenberg} W. Heisenberg, \textit{The Physical Principles of the Quantum Theory}, University of Chicago Press, 1930.
-\bibitem{haskell} Simon Thompson, \textit{Haskell: The Craft of Functional Programming}, Addison-Wesley, 2011.
+\bibitem{hamilton} W. R. Hamilton, \textit{Elements of Quaternions}, 1866.
+\bibitem{heisenberg} W. Heisenberg, \textit{The Physical Principles of the Quantum Theory}, 1930.
 \end{thebibliography}
 
 \newpage
 \appendix
-\section{Source Code Appendix}
+\section{Appendix: Full Haskell Source Code}
 
 \subsection{Clock.hs}
 \begin{lstlisting}
 module Main where
 import Text.Read (readMaybe)
 
-rotationOperator :: Double -> (Double, Double, Double, Double)
-rotationOperator t = (cos(t/2), sin(t/2), 0, 0)
-
 main :: IO ()
 main = do
-    putStrLn "Enter time step (t):"
+    putStrLn "ENTER TIME STEP:"
     input <- getLine
-    let raw = if head input == '.' then "0" ++ input else input
-    case readMaybe raw of
+    let raw = if not (null input) && head input == '.' then "0" ++ input else input
+    case readMaybe raw :: Maybe Double of
         Just t -> do
-            let (r, i, j, k) = rotationOperator t
-            writeFile "operator_bus.txt" (unwords $ map show [r,i,j,k])
+            let (r, i) = (cos(t/2), sin(t/2))
+            writeFile "operator_bus.txt" (unwords $ map show [r, i, 0.0, 0.0])
             putStrLn "Signal Generator: Rotation pulse pushed."
         Nothing -> putStrLn "Error: Invalid Input."
 \end{lstlisting}
@@ -153,19 +148,18 @@ instance Num Q where
         (a1*b2 + b1*a2 + c1*d2 - d1*c2)
         (a1*c2 - b1*d2 + c1*a2 + d1*b2)
         (a1*d2 + b1*c2 - c1*b2 + d1*a2)
+    (Q a b c d) + (Q w x y z) = Q (a+w) (b+x) (c+y) (d+z)
     (Q a b c d) - (Q w x y z) = Q (a-w) (b-x) (c-y) (d-z)
     fromInteger n = Q (fromInteger n) 0 0 0
-    negate (Q a b c d) = Q (-a) (-b) (-c) (-d)
-    (+) (Q a b c d) (Q w x y z) = Q (a+w) (b+x) (c+y) (d+z)
-    abs = undefined; signum = undefined
+    abs (Q a b c d) = Q (sqrt(a*a + b*b + c*c + d*d)) 0 0 0
+    signum (Q a b c d) = let m = sqrt(a*a+b*b+c*c+d*d) in Q (a/m) (b/m) (c/m) (d/m)
 
 main :: IO ()
 main = do
     instr <- readFile "operator_bus.txt"
-    let [r, i, j, k] = map read (words instr)
+    let [r, i, j, k] = map read (words instr) :: [Double]
     let rot = Q r i j k
-    let p = Q 0 1 0 0
-    let q = Q 0 0 1 0
+    let (p, q) = (Q 0 1 0 0, Q 0 0 1 0)
     let gap = (p * q) - (q * p)
     let (Q r2 i2 j2 k2) = rot * gap
     writeFile "bus.txt" (unwords $ map show [r2, i2, j2, k2])
@@ -180,7 +174,7 @@ main = do
     dat <- readFile "bus.txt"
     let [r, i, j, k] = map read (words dat) :: [Double]
     let amp = sqrt (r*r + i*i + j*j + k*k)
-    putStrLn $ "--- SENSOR READING ---\nAmplitude: " ++ show amp
+    putStrLn $ "--- SENSOR READING ---\nMeasured Amplitude: " ++ show amp
 \end{lstlisting}
 
 \end{document}
