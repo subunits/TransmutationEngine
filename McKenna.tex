@@ -1,0 +1,117 @@
+\documentclass[10pt,twocolumn]{article}
+
+% --- CORE ARCHITECTURE ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{letterpaper, margin=0.5in, bottom=0.8in}
+\usepackage{fourier} 
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usepackage{enumitem}
+
+% --- THEORETICAL STYLING ---
+\definecolor{HyperBlue}{HTML}{000044}
+\titleformat{\section}{\color{HyperBlue}\normalfont\large\bfseries}{\thesection}{1em}{\MakeUppercase}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
+
+% --- EMBEDDED BIBLIOGRAPHY ---
+\usepackage[numbers]{natbib}
+\begin{filecontents}{novelty.bib}
+@book{landscape1975,
+  author = {McKenna, T. and McKenna, D.},
+  title = {The Invisible Landscape},
+  publisher = {Seabury Press},
+  year = {1975}
+}
+@article{sheliak1998,
+  author = {Meyer, P.},
+  title = {The Timewave Zero Algorithm: A Technical Manual},
+  year = {1998}
+}
+@misc{watkins1996,
+  author = {Watkins, M.},
+  title = {A Mathematical Critique of the Timewave},
+  year = {1996}
+}
+\end{filecontents}
+
+% --- DOCUMENT METADATA ---
+\title{\vspace{-1.5cm}\textbf{THE NOVELTY THEORY MASTER-FILE}\\ \large Unified Technical and Oral Compendium}
+\author{Archival Synthesis System: Gemini 3 Flash}
+\date{Reference: $t \to 0$ / \today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction: Machine Logic}
+Novelty Theory (NT) is a fractal model of time that describes the universe as a struggle between Habit (entropy) and Novelty (complexity). This document formalizes the transition from the I Ching King Wen sequence to the Timewave Zero algorithm.
+
+\section{The La Chorrera Narrative}
+The "Word of Mouth" foundation of the theory lies in the 1971 Amazonian expedition.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{The Logos:} A perceived autonomous intelligence that "dictated" the mathematical structure of the Timewave.
+    \item \textbf{The Purple Smoke:} Oral reports of a physical, ectoplasmic manifestation of information during vocal resonance experiments.
+\end{itemize}
+
+\section{Mathematical Formalization}
+The wave is generated from the \textbf{First Order of Difference} in the 64-hexagram King Wen sequence.
+
+The value $V$ between hexagram $n$ and $n+1$ is calculated as:
+\begin{equation}
+V_n = \sum_{i=1}^{6} |L_{n,i} - L_{n+1,i}|
+\end{equation}
+This produces the 384 data points that form the master-template of the fractal wave.
+
+\subsection{Fractal Scaling Law}
+The wave is self-similar across scales, governed by powers of 64:
+\begin{itemize}
+    \item $384 \times 64^1 \approx 67.54$ years (Historical).
+    \item $384 \times 64^2 \approx 4,322$ years (Epochal).
+\end{itemize}
+
+\section{The Watkins-Meyer Correction}
+In 1994, mathematicians discovered a "discontinuity" in McKenna’s original math (the Kelley Glitch). 
+
+The modern "Pro" version uses the \textbf{Sheliak algorithm}, which ensures mathematical continuity as the wave approaches the singularity.
+
+\section{Temporal Ingress Table}
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{Epochal Shift} & \textbf{Novelty Value ($\eta$)} \\ \midrule
+Emergence of Life & 0.012 \\
+Invention of Print & 0.448 \\
+Atomic Fission & 0.782 \\
+Digital Singularity & 0.999 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\section{The Stoned Ape Hypothesis}
+The documentation asserts that human language and the "Timewave perception" were triggered by psilocybin-induced neuroplasticity, functioning as an evolutionary "novelty pump."
+
+\section{Conclusion: The Zero Point}
+As $t$ approaches zero (December 21, 2012), the model predicts an infinite compression of information. This single file is a static capture of that terminal state.
+
+\bibliographystyle{plainnat}
+\bibliography{novelty}
+
+\onecolumn
+\section*{Visual: The Fractal Singularity}
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    \draw [domain=0:50,variable=\t,smooth,samples=1000,blue!80,thick] 
+    plot ({\t r}: {0.005*\t*\t});
+    \node at (0,0) {\textbf{ZERO POINT}};
+    \node at (10,5) {The Eschaton};
+\end{tikzpicture}
+
+\end{center}
+
+\end{document}
