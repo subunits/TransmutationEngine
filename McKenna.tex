@@ -5,39 +5,18 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{geometry}
-\geometry{letterpaper, margin=0.6in, bottom=0.8in}
+\geometry{letterpaper, margin=0.6in, top=0.8in, bottom=1in}
 \usepackage{fourier} 
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{titlesec}
 \usepackage{tikz}
 \usepackage{enumitem}
-\usepackage{filecontents} 
 
 % --- THEORETICAL STYLING ---
 \definecolor{HyperBlue}{HTML}{000044}
 \titleformat{\section}{\color{HyperBlue}\normalfont\large\bfseries}{\thesection}{1em}{\MakeUppercase}
 \titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
-
-% --- EMBEDDED BIBLIOGRAPHY (Auto-generates in Overleaf) ---
-\begin{filecontents*}{novelty.bib}
-@book{landscape1975,
-  author = {McKenna, T. and McKenna, D.},
-  title = {The Invisible Landscape},
-  publisher = {Seabury Press},
-  year = {1975}
-}
-@article{sheliak1998,
-  author = {Meyer, P.},
-  title = {The Timewave Zero Algorithm: A Technical Manual},
-  year = {1998}
-}
-@misc{watkins1996,
-  author = {Watkins, M.},
-  title = {A Mathematical Critique of the Timewave},
-  year = {1996}
-}
-\end{filecontents*}
 
 % --- DOCUMENT METADATA ---
 \title{\vspace{-1.5cm}\textbf{NOVELTY THEORY: THE CONSOLIDATED DOCUMENTATION}\\ \large A Technical Briefing on Timewave Zero and the La Chorrera Protocols}
@@ -59,11 +38,12 @@ The "word of mouth" foundation of the theory lies in the Amazonian expedition wh
 \end{itemize}
 
 \section{The Mathematical Blueprint}
-The Timewave is derived from the first-order differences of the \textbf{King Wen Sequence} of the I Ching.
+The Timewave is derived from the first-order differences of the \textbf{King Wen Sequence} of the I Ching. 
+
+Each hexagram consists of 6 lines. The novelty value $V_n$ is the number of lines that flip between hexagram $n$ and $n+1$:
 \begin{equation}
 V_n = \sum_{i=1}^{6} |L_{n,i} - L_{n+1,i}|
 \end{equation}
-Where $V_n$ represents the novelty value, $L$ represents the hexagram lines, and the sequence iterates through the 64 hexagrams to produce the 384-yao master set.
 
 \section{Fractal Scaling and Resonances}
 The theory utilizes a "Rule of 64" to scale the wave across history.
@@ -80,28 +60,34 @@ The theory utilizes a "Rule of 64" to scale the wave across history.
 \end{table}
 
 \section{The Watkins-Meyer Correction}
-In 1994, mathematicians identified a flaw in the original algorithm known as the "Kelley Glitch." The modern "Pro" standard uses the \textbf{Sheliak} refinement, ensuring mathematical continuity as history approaches the zero point.
+In 1994, mathematicians identified a flaw in the original algorithm known as the "Kelley Glitch." The modern standard uses the \textbf{Sheliak} refinement, ensuring mathematical continuity as history approaches the zero point.
+
 
 \section{The Singularity: $t=0$}
-The Timewave hits its final convergence point (originally calculated for December 2012). At this point, the "map" of history and the "territory" of reality merge into a state of infinite novelty.
+The Timewave hits its final convergence point. At this point, the "map" of history and the "territory" of reality merge into a state of infinite novelty.
 
-\bibliographystyle{plain}
-\bibliography{novelty}
+% --- INTERNAL BIBLIOGRAPHY ---
+\begin{thebibliography}{9}
+\bibitem{landscape1975} McKenna, T. and McKenna, D. (1975). \textit{The Invisible Landscape}. Seabury Press.
+\bibitem{sheliak1998} Meyer, P. (1998). \textit{The Timewave Zero Algorithm: A Technical Manual}.
+\bibitem{watkins1996} Watkins, M. (1996). \textit{A Mathematical Critique of the Timewave}.
+\end{thebibliography}
 
 \onecolumn
 \section*{Visual: The Fractal Singularity and Convergence Wave}
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
-    % Drawing the Spiral
+    % Drawing the Spiral (Singularity)
     \draw [domain=0:50,variable=\t,smooth,samples=1000,blue!60,thick] 
     plot ({\t r}: {0.003*\t*\t});
     
-    % Drawing the jagged Timewave logic
-    \draw[thick, HyperBlue] (-8,-4) -- (-7,-2) -- (-6.5,-3) -- (-5,-1) -- (-4.5,-2.5) -- (-3,0) -- (-2.5,-1) -- (-1,1) -- (0,0);
+    % Drawing the jagged Timewave logic (The Wave)
+    \draw[thick, HyperBlue] (-9,-4) -- (-8,-2) -- (-7.5,-3) -- (-6,-1) -- (-5.5,-2.5) -- (-4,0) -- (-3.5,-1) -- (-2,1) -- (0,0);
     
-    \node at (0,-0.5) {\textbf{ZERO POINT}};
-    \node at (-8,-4.5) {\footnotesize \textit{Timeline Toward Infinite Complexity}};
+    \node at (0,-0.5) {\textbf{ZERO POINT (2012)}};
+    \node at (-7,-4.5) {\footnotesize \textit{Temporal Ingression Toward Infinite Complexity}};
 \end{tikzpicture}
 \end{center}
+
 
 \end{document}
