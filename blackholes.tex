@@ -1,93 +1,42 @@
-\documentclass[12pt, letterpaper]{article}
+\documentclass[11pt, a4paper]{article}
 
-% --- Core Packages ---
+% --- Functional Preamble ---
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath, amssymb, amsthm, amsfonts}
-\usepackage{physics} % Standard for physics derivatives, ket notation, etc.
+\usepackage{physics} 
 \usepackage{geometry}
 \geometry{margin=1in}
-\usepackage{hyperref}
-\hypersetup{colorlinks=true, linkcolor=blue, citecolor=cyan, urlcolor=magenta}
 \usepackage{cite}
+\usepackage{hyperref}
+
+% --- Fixed Graphics & TikZ (No pgfkeys errors) ---
 \usepackage{tikz}
-\usetikzlibrary{arrows,calc,decorations.markings}
-\usepackage{fancyhdr}
+\usetikzlibrary{arrows, calc, decorations.pathmorphing}
 
-% --- Theorem Environments ---
-\newtheorem{definition}{Definition}
-\newtheorem{theorem}{Theorem}
-\newtheorem{proposition}{Proposition}
-
-% --- Custom Macros ---
-\newcommand{\rs}{r_s}
-\newcommand{\kahler}{K{\"a}hler }
-\newcommand{\K}{\mathcal{K}}
-
-% --- Page Formatting ---
-\pagestyle{fancy}
-\fancyhead[L]{Schwarzschild Radius \& \kahler Geometry}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{Confidential / Technical Note}
+% --- Metadata ---
+\title{\textbf{Functional Correspondence: Schwarzschild Horizons and \kahler Geometry}}
+\author{Technical Synthesis}
+\date{\today}
 
 \begin{document}
 
-% --- Title Page ---
-\begin{titlepage}
-    \centering
-    \vspace*{2cm}
-    \Huge \textbf{Geometric Intersections: Schwarzschild Radii and \kahler-Einstein Manifolds}\\
-    \vspace{1.5cm}
-    \large \textit{A Technical Synthesis for Complex Geometry and General Relativity}\\
-    \vfill
-    \textbf{Abstract}\\
-    \begin{quote}
-        This paper explores the relationship between the Schwarzschild radius ($r_s$) in Lorentzian manifolds and the structural constraints of \kahler geometry. By employing Wick rotation to Euclidean signature, we demonstrate how the horizon $r = r_s$ translates into a topological constraint on the \kahler potential and the resulting Ricci-flat metrics of Calabi-Yau manifolds.
-    \end{quote}
-    \vfill
-    \today
-\end{titlepage}
+\maketitle
 
-\tableofcontents
-\newpage
+\begin{abstract}
+This paper outlines the geometric mapping of the Schwarzschild radius ($r_s$) into the complex structure of \kahler manifolds. We focus on the functional transition from Lorentzian spacetime to Euclidean Riemannian space and the resulting constraints on the \kahler potential.
+\end{abstract}
 
-\section{The Schwarzschild Geometry}
-The Schwarzschild metric is the unique vacuum solution for a static, spherically symmetric system. In standard coordinates $(t, r, \theta, \phi)$, the line element is given by:
+\section{The Schwarzschild Metric}
+The Schwarzschild metric is the unique vacuum solution for a static, spherically symmetric mass $M$. The line element is:
 \begin{equation}
-    ds^2 = -\left(1 - \frac{\rs}{r}\right) c^2 dt^2 + \left(1 - \frac{\rs}{r}\right)^{-1} dr^2 + r^2 (d\theta^2 + \sin^2 \theta d\phi^2)
+    ds^2 = -\left(1 - \frac{r_s}{r}\right) c^2 dt^2 + \left(1 - \frac{r_s}{r}\right)^{-1} dr^2 + r^2 d\Omega^2
 \end{equation}
-The \textbf{Schwarzschild radius}, defined as $\rs = \frac{2GM}{c^2}$, represents the event horizon. 
+where $r_s = 2GM/c^2$. The function $f(r) = (1 - r_s/r)$ determines the causal structure of the manifold.
 
-\subsection{Kruskal-Szekeres Completion}
-To analyze the manifold beyond the coordinate singularity at $r = \rs$, we define the Kruskal coordinates $(U, V)$. The metric becomes:
-\begin{equation}
-    ds^2 = \frac{32(GM)^3}{r} e^{-r/2GM} (-dV^2 + dU^2) + r^2 d\Omega^2
-\end{equation}
-This confirms that the manifold is smooth at the horizon, a property that must be preserved when mapping to \kahler structures.
+\section{Causal Structure (Penrose Diagram)}
 
-
-
-\section{\kahler Manifolds and Wick Rotation}
-To connect with \kahler geometry, we perform a Wick rotation $t \to i\tau$. The Euclidean Schwarzschild metric near $r = \rs$ takes the form:
-\begin{equation}
-    ds_E^2 \approx \left( \frac{r-\rs}{\rs} \right) d\tau^2 + \left( \frac{\rs}{r-\rs} \right) dr^2 + \rs^2 d\Omega^2
-\end{equation}
-Setting $\rho^2 = 4\rs(r-\rs)$, the $(r, \tau)$ part of the metric becomes $\rho^2 d(\frac{\tau}{2\rs})^2 + d\rho^2$, which is the metric of a plane in polar coordinates if $\tau$ has period $8\pi GM$.
-
-\subsection{The \kahler Potential}
-On a \kahler manifold, the metric $g_{i\bar{j}}$ is derived from a local scalar function $\K(z, \bar{z})$:
-\begin{equation}
-    g_{i\bar{j}} = \partial_i \bar{\partial}_j \K
-\end{equation}
-For Ricci-flat solutions (Einstein manifolds with $\Lambda = 0$), the potential must satisfy the complex Monge-Amp{\`e}re equation:
-\begin{equation}
-    \det (\partial_i \bar{\partial}_j \K) = 1
-\end{equation}
-
-
-
-\section{Conformal Representation (TikZ Diagram)}
-The causal structure of the Schwarzschild spacetime and its horizon $\rs$ is best visualized via a Penrose-Carter diagram.
+The event horizon at $r = r_s$ acts as a null boundary. In a conformal representation, this is visualized as the limit where light cones tilt toward the singularity.
 
 \begin{figure}[h]
     \centering
@@ -96,33 +45,26 @@ The causal structure of the Schwarzschild spacetime and its horizon $\rs$ is bes
         \draw [thick] (0,0) -- (1,-1) node[midway, below left] {$\mathcal{H}^-$};
         \draw [dashed] (1,1) -- (2,0) node[midway, above right] {$\mathcal{I}^+$};
         \draw [dashed] (1,-1) -- (2,0) node[midway, below right] {$\mathcal{I}^-$};
-        \draw [ultra thick, red, decoration={zigzag,amplitude=1.5pt, segment length=4pt}, decorate] (0,1) -- (2,1);
-        \node at (1,1.15) {Singularity ($r=0$)};
-        \node at (1, -0.3) {Region I (Exterior)};
+        \draw [ultra thick, red, decorate, decoration={zigzag, amplitude=1.5pt, segment length=4pt}] (0,1) -- (2,1);
+        \node at (1,1.2) {Singularity ($r=0$)};
     \end{tikzpicture}
-    \caption{Penrose diagram showing the horizon at $r = \rs$.}
+    \caption{Penrose diagram for the Schwarzschild geometry.}
 \end{figure}
 
-\section{Summary of Correspondence}
-\begin{center}
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Feature} & \textbf{Schwarzschild (GR)} & \textbf{\kahler Geometry} \\ \hline
-Metric Origin & Einstein Field Equations & \kahler Potential $\K$ \\ \hline
-Singularity & $r = 0$ (Curvature) & Blow-up of Holomorphic Form \\ \hline
-Horizon & $r = \rs$ (Null Surface) & Periodicity of $\tau$ / Cigar Tip \\ \hline
-Holonomy & $SO(1,3)$ & $U(n)$ or $SU(n)$ \\ \hline
-\end{tabular}
-\end{center}
+\section{\kahler Mapping via Wick Rotation}
+To interpret the Schwarzschild geometry as a \kahler manifold, we apply a Wick rotation $t \to i\tau$. This transforms the metric into a Euclidean signature. To avoid a conical singularity at $r = r_s$, the coordinate $\tau$ must be periodic with $\beta = 4\pi r_s$. 
 
-\section{Conclusion}
-The Schwarzschild radius acts as a fundamental scale that determines the temperature and periodicity of the complexified manifold. In \kahler-Einstein theory, this ensures the existence of a smooth, compactifiable geometry essential for string theoretic models.
+
+
+This geometry is often referred to as the \textit{Schwarzschild-K{\"a}hler cigar}. On such a manifold, the metric is generated by a \kahler potential $\mathcal{K}$:
+\begin{equation}
+    g_{i\bar{j}} = \frac{\partial^2 \mathcal{K}}{\partial z^i \partial \bar{z}^j}
+\end{equation}
+The \kahler-Einstein condition $R_{i\bar{j}} = \Lambda g_{i\bar{j}}$ requires that the potential satisfies the complex Monge-Amp{\`e}re equation. For a vacuum black hole ($\Lambda = 0$), the manifold is Ricci-flat, placing strict requirements on the behavior of $\mathcal{K}$ as $r \to r_s$.
 
 \begin{thebibliography}{99}
-\bibitem{Hawking75} Hawking, S. W. (1975). Particle Creation by Black Holes. \textit{Communications in Mathematical Physics}.
-\bibitem{Gibbons93} Gibbons, G. W., \& Hawking, S. W. (1993). \textit{Euclidean Quantum Gravity}. World Scientific.
-\bibitem{Yau78} Yau, S. T. (1978). On the Ricci curvature of a compact \kahler manifold. \textit{Communications on Pure and Applied Mathematics}.
-\bibitem{Moroianu07} Moroianu, A. (2007). \textit{Lectures on \kahler Geometry}. Cambridge University Press.
+\bibitem{Hawking75} Hawking, S. W. (1975). Particle Creation by Black Holes. \textit{Comm. Math. Phys.} 43, 199.
+\bibitem{Yau78} Yau, S. T. (1978). On the Ricci curvature of a compact \kahler manifold. \textit{Comm. Pure Appl. Math.} 31, 339.
 \end{thebibliography}
 
 \end{document}
