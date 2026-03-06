@@ -17,22 +17,24 @@ These structures are compatible with the Riemannian metric $g$, satisfying:
 \[ g(IX, IY) = g(JX, JY) = g(KX, KY) = g(X, Y) \]
 
 \section{2. Parallelism and Holonomy}
-The manifold is Hyperkähler if and only if the complex structures are covariantly constant with respect to the Levi-Civita connection $\nabla$:
-\[ \nabla I = \nabla J = \nabla K = 0 \]
-This implies the three Kähler forms $\omega_I(X, Y) = g(IX, Y)$, etc., are parallel. Consequently, the holonomy group $\text{Hol}(g)$ is a subgroup of the compact symplectic group $Sp(n)$. This restriction forces the manifold to be Ricci-flat:
+The manifold is Hyperkähler if and only if $\nabla I = \nabla J = \nabla K = 0$. This implies the three Kähler forms are parallel, restricting the holonomy group $\text{Hol}(g)$ to a subgroup of $Sp(n)$, forcing Ricci-flatness:
 \[ \text{Ric}(g) = 0 \]
 
-\section{3. The Hyperkähler Quotient}
-Let $G$ be a Lie group acting on $M$ preserving the triplet $(I, J, K)$. Let $\mu = (\mu_I, \mu_J, \mu_K): M \to \mathfrak{g}^* \otimes \mathbb{R}^3$ be the corresponding hyper-moment map. The Hyperkähler quotient is defined as:
-\[ M /// G = \mu^{-1}(0, 0, 0) / G \]
-Under regularity conditions, $M /// G$ inherits a unique Hyperkähler structure.
+\section{3. Twistor Space Construction}
+For a Hyperkähler manifold $M$, we define the \textbf{Twistor space} $Z = M \times \mathbb{CP}^1$. The complex structures $I, J, K$ define a bundle of complex structures over $\mathbb{CP}^1$. A point $(\zeta_1 : \zeta_2) \in \mathbb{CP}^1$ corresponds to a complex structure $\mathcal{I}$ on $M$:
+\[ \mathcal{I} = \frac{\zeta_1 I + \zeta_2 J + \zeta_3 K}{|\zeta|} \]
+The space $Z$ is a complex manifold, and the fibers of $p: Z \to \mathbb{CP}^1$ are the complex manifolds $(M, \mathcal{I})$.
 
-\section{4. Manifold Hierarchy}
+\section{4. The Hyperkähler Quotient}
+Let $G$ act on $M$ preserving the triplet $(I, J, K)$ with hyper-moment map $\mu = (\mu_I, \mu_J, \mu_K)$. The quotient is:
+\[ M /// G = \mu^{-1}(0, 0, 0) / G \]
+
+\section{5. Manifold Hierarchy}
 \begin{table}[h!]
 \centering
 \begin{tabular}{lccc}
 \toprule
-\textbf{Manifold Type} & \textbf{Complex Struct.} & \textbf{Holonomy} & \textbf{Ricci-Flat} \\
+\textbf{Manifold} & \textbf{Complex Struct.} & \textbf{Holonomy} & \textbf{Ricci-Flat} \\
 \midrule
 Kähler & 1 & $U(n)$ & No \\
 Calabi-Yau & 1 & $SU(n)$ & Yes \\
@@ -40,8 +42,5 @@ Hyperkähler & 3 & $Sp(n)$ & Yes \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\section{5. Physics Application: Sigma Models}
-In the context of $N=4$ supersymmetric non-linear sigma models in 2D, the target space must be a Hyperkähler manifold to ensure the existence of the required supersymmetry generators and to maintain the vanishing of the beta function.
 
 \end{document}
