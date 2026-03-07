@@ -23,13 +23,20 @@ The manifold is Hyperkähler if and only if $\nabla I = \nabla J = \nabla K = 0$
 \section{3. Twistor Space Construction}
 For a Hyperkähler manifold $M$, we define the \textbf{Twistor space} $Z = M \times \mathbb{CP}^1$. The complex structures $I, J, K$ define a bundle of complex structures over $\mathbb{CP}^1$. A point $(\zeta_1 : \zeta_2) \in \mathbb{CP}^1$ corresponds to a complex structure $\mathcal{I}$ on $M$:
 \[ \mathcal{I} = \frac{\zeta_1 I + \zeta_2 J + \zeta_3 K}{|\zeta|} \]
-The space $Z$ is a complex manifold, and the fibers of $p: Z \to \mathbb{CP}^1$ are the complex manifolds $(M, \mathcal{I})$.
+
 
 \section{4. The Hyperkähler Quotient}
 Let $G$ act on $M$ preserving the triplet $(I, J, K)$ with hyper-moment map $\mu = (\mu_I, \mu_J, \mu_K)$. The quotient is:
 \[ M /// G = \mu^{-1}(0, 0, 0) / G \]
 
-\section{5. Manifold Hierarchy}
+\section{5. Gibbons-Hawking and ALE Classification}
+The Gibbons-Hawking construction defines the metric via a harmonic function $V$ on $\mathbb{R}^3$:
+\[ ds^2 = V^{-1}(d\tau + \vec{\omega} \cdot d\vec{x})^2 + V d\vec{x}^2 \]
+
+ALE (Asymptotically Locally Euclidean) spaces are classified by the minimal resolution of Kleinian singularities $\mathbb{C}^2/\Gamma$, corresponding to the $ADE$ Dynkin diagrams.
+
+
+\section{6. Manifold Hierarchy}
 \begin{table}[h!]
 \centering
 \begin{tabular}{lccc}
@@ -45,11 +52,13 @@ Hyperkähler & 3 & $Sp(n)$ & Yes \\
 
 \section*{References}
 \begin{thebibliography}{99}
-\bibitem{Calabi79} Calabi, E. (1979). Métriques kählériennes et fibrés holomorphes. \emph{Ann. Sci. École Norm. Sup.}, 12(2), 269--294.
-\bibitem{Beauville83} Beauville, A. (1983). Variétés Kähleriennes dont la première classe de Chern est nulle. \emph{J. Differential Geom.}, 18(4), 755--782.
-\bibitem{Berger55} Berger, M. (1955). Sur les groupes d'holonomie. \emph{Bull. Soc. Math. France}, 83, 279--330.
-\bibitem{HKLR87} Hitchin, N. J., Karlhede, A., Lindström, U., \& Roček, M. (1987). Hyperkähler metrics and supersymmetry. \emph{Comm. Math. Phys.}, 108(4), 535--589.
-\bibitem{AHS78} Atiyah, M. F., Hitchin, N. J., \& Singer, I. M. (1978). Self-duality in four-dimensional Riemannian geometry. \emph{Proc. Roy. Soc. Lond.}, 362(1711), 425--461.
+\bibitem{Calabi79} Calabi, E. (1979). Métriques kählériennes et fibrés holomorphes. \emph{Ann. Sci. École Norm. Sup.}
+\bibitem{Beauville83} Beauville, A. (1983). Variétés Kähleriennes dont la première classe de Chern est nulle. \emph{J. Differential Geom.}
+\bibitem{Berger55} Berger, M. (1955). Sur les groupes d'holonomie. \emph{Bull. Soc. Math. France}
+\bibitem{HKLR87} Hitchin, N. J., et al. (1987). Hyperkähler metrics and supersymmetry. \emph{Comm. Math. Phys.}
+\bibitem{AHS78} Atiyah, M. F., et al. (1978). Self-duality in four-dimensional Riemannian geometry. \emph{Proc. Roy. Soc. Lond.}
+\bibitem{GH78} Gibbons, G. W., \& Hawking, S. W. (1978). Classification of gravitational instanton symmetries. \emph{Phys. Lett. B}
+\bibitem{Kronheimer89} Kronheimer, P. B. (1989). The construction of ALE spaces as hyperkähler quotients. \emph{J. Differential Geom.}
 \end{thebibliography}
 
 \end{document}
