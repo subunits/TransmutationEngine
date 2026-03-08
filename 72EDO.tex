@@ -1,0 +1,84 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- Professional Scientific Preamble ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsfonts} 
+\usepackage{booktabs}                   
+\usepackage{geometry}                   
+\usepackage{url}                        
+\usepackage{enumitem}                   
+\geometry{margin=1in}
+
+% --- Document Metadata ---
+\title{Mathematical Topology and Harmonic Approximation of 72-EDO: \\ \large A Study in High-Resolution Temperament}
+\author{Acoustical Research Group}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This paper provides a formal analysis of 72-EDO (72 Equal Divisions of the Octave). We evaluate its capacity for 11-limit Just Intonation (JI) approximation and its topological efficiency using Fokker Periodicity Blocks. Our findings confirm 72-EDO as an optimal superset for unifying Western chromaticism and prime-limit microtonality.
+\end{abstract}
+
+\section{Logarithmic Foundation}
+The system is defined by a step size $\Delta$ of exactly $16.\overline{6}$ cents, derived from the $72^{nd}$ root of 2:
+\begin{equation}
+f(n) = f_0 \cdot 2^{n/72}, \quad n \in \{0, 1, \dots, 71\}
+\end{equation}
+
+\section{Harmonic Mapping and Error Metrics}
+72-EDO is mathematically superior to 12-EDO because it captures the $5^{th}, 7^{th},$ and $11^{th}$ harmonics with high fidelity. The "truth" of the system is demonstrated in its minimal deviation ($\epsilon$) from the physical harmonic series.
+
+
+
+\begin{table}[h!]
+\centering
+\caption{72-EDO Prime-Limit Mapping}
+\label{tab:harmonics}
+\begin{tabular}{@{}llcccr@{}}
+\toprule
+Harmonic & Ratio & Just (Cents) & 72-EDO Step & 72-EDO (Cents) & Error (Cents) \\ \midrule
+3  & $3/2$   & 701.96  & 42 & 700.00  & $-1.96$ \\
+5  & $5/4$   & 386.31  & 23 & 383.33  & $-2.98$ \\
+7  & $7/4$   & 968.83  & 58 & 966.67  & $-2.16$ \\
+11 & $11/8$  & 551.32  & 33 & 550.00  & $-1.32$ \\
+13 & $13/8$  & 840.53  & 50 & 833.33  & $-7.20$ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\section{Fokker Periodicity Blocks and Commas}
+The structural "truth" of 72-EDO lies in its comma resolution. Unlike 12-EDO, which tempers out the Syntonic Comma ($81/80$), 72-EDO maps it to exactly 1 step (approx. $16.67$ cents). This allows for the construction of Fokker Periodicity Blocks \cite{erlich1998}, which represent JI intervals as a closed lattice in a finite equal temperament.
+
+
+
+\section{Historical and Analytical References}
+The following sources provide the foundational "truth" for this study.
+
+\begin{thebibliography}{99}
+
+\bibitem{monzo2005}
+Joe Monzo. \textit{72-EDO}. Tonalsoft Encyclopedia of Microtonal Music Theory, 2005. \\
+Available: \url{http://www.tonalsoft.com/enc/number/72edo.aspx}
+
+\bibitem{erlich1998}
+Paul Erlich. \textit{A Gentle Introduction to Fokker Periodicity Blocks}. Xenharmonikon 17, 1998. \\
+(Crucial for understanding the geometric mapping of 72-EDO).
+
+\bibitem{wysch1937}
+Ivan Wyschnegradsky. \textit{Manuel d'harmonie à quarts de ton}. Paris, 1937. \\
+(Historical foundation of 72-EDO as a superset of smaller EDOs).
+
+\bibitem{maneri1994}
+Joe Maneri and Scott Van Duyne. \textit{Preliminary Studies in the Virtual Pitch Continuum}. Boston, 1994. \\
+(Reference for 72-EDO notation and pedagogical application).
+
+\bibitem{partch1974}
+Harry Partch. \textit{Genesis of a Music}. Da Capo Press, 1974. \\
+(Foundational text for the 11-limit JI theory that 72-EDO approximates).
+
+\end{thebibliography}
+
+\end{document}
