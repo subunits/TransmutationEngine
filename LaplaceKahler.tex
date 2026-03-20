@@ -1,0 +1,34 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+The Laplacian operator on a Kähler manifold admits an elegant local expression that simplifies significantly compared to the general Riemannian case. For a Kähler manifold equipped with a metric and a corresponding Kähler form, the complex Laplacian acting on a smooth function is defined through the combined operations of the Dolbeault operators and their adjoints. In local holomorphic coordinates, this operator reduces to a concise formula involving the inverse of the metric tensor and the mixed second order partial derivatives of the function. This property distinguishes these spaces from general Riemannian geometry as the final expression does not explicitly involve the first derivatives of the metric components or the determinant of the metric.
+
+This simplification arises directly from the Kähler condition which ensures that the Riemannian Levi-Civita connection and the complex Chern connection coincide. In a general setting, the Laplace-Beltrami operator requires the use of the metric determinant and its derivatives to account for the curvature and volume form of the space. However, on a Kähler manifold, the local geometry allows for the existence of a Kähler potential which leads to specific symmetries in the Christoffel symbols. These symmetries cause the terms involving the derivatives of the metric to cancel out exactly during the derivation of the adjoint operators, leaving a purely elliptic operator that depends only on mixed derivatives.
+
+The derivation of this local formula is typically achieved by examining the formal adjoint of the operators within an L2 inner product space or through the use of Kähler identities. By applying integration by parts to the relationship between the gradient and the divergence on a complex manifold, one can show that the adjoint operator acting on a differential form takes a specific divergence-free shape. When this is applied to the exterior derivative of a scalar function, the resulting second-order operator provides a direct link between the metric and the complex structure. This relationship is fundamental in complex geometry as it allows for the study of harmonic functions and heat flow using standard multivariate calculus techniques.
+
+\begin{thebibliography}{9}
+
+\bibitem{Moroianu}
+Moroianu, A. (2007). \textit{Lectures on Kähler Geometry}. London Mathematical Society Student Texts. Cambridge University Press.
+
+\bibitem{Szekelyhidi}
+Székelyhidi, G. (2014). \textit{An Introduction to Extremal Kähler Metrics}. Graduate Studies in Mathematics. American Mathematical Society.
+
+\bibitem{Huybrechts}
+Huybrechts, D. (2005). \textit{Complex Geometry: An Introduction}. Universitext. Springer Berlin Heidelberg.
+
+\bibitem{StackExchange}
+Xie, Y., et al. (2020). \textit{Local formula of Laplacian on Kähler manifolds}. Mathematics Stack Exchange. URL: https://math.stackexchange.com/q/3779831.
+
+\end{thebibliography}
+
+\end{document}
