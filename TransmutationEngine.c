@@ -5,394 +5,151 @@
 #include <stdint.h>
 
 /* ============================================================================
- * TRANSMUTATION ENGINE - Core Architecture
- * 
- * A pipeline for transforming data between representational domains:
- * Musical Notation → Quaternion Space → Cellular Automaton → Holographic → ASCII
+ * TRANSMUTATION ENGINE - Refactored for UQGVS Integrity
  * ============================================================================ */
-
-// ============================================================================
-// QUATERNION STRUCTURES (from your UQGVS work)
-// ============================================================================
-
-typedef struct {
-    double w, x, y, z;
-} Quaternion;
-
-typedef struct {
-    Quaternion rotation;
-    double timestamp;
-    double magnitude;  // For musical amplitude/dynamics
-} GesturePoint;
-
-// ============================================================================
-// CELLULAR AUTOMATON (from your FDCA-Simulator)
-// ============================================================================
 
 #define CA_WIDTH 256
 #define CA_GENERATIONS 64
+#define HOLO_SIZE 128
+#define ASCII_RAMP " .:-=+*#%@"
+#define RAMPLEN 10
+
+typedef struct { double w, x, y, z; } Quaternion;
+typedef struct { Quaternion rotation; double magnitude; } GesturePoint;
 
 typedef struct {
     uint8_t cells[CA_WIDTH];
-    uint8_t rule;  // Wolfram rule number (0-255)
+    uint8_t rule;
 } CellularState;
-
-// ============================================================================
-// HOLOGRAPHIC ENCODING (from your Body-Holographic work)
-// ============================================================================
-
-#define HOLO_SIZE 128
 
 typedef struct {
     double intensity[HOLO_SIZE][HOLO_SIZE];
-    double phase[HOLO_SIZE][HOLO_SIZE];
-    double amplitude[HOLO_SIZE][HOLO_SIZE];
 } HolographicPattern;
 
-// ============================================================================
-// PIPELINE STATE - The Transmutation Flow
-// ============================================================================
-
 typedef struct {
-    // Source domain
-    void* source_data;
-    size_t source_size;
-    
-    // Intermediate representations
     GesturePoint* quaternion_seq;
     size_t quat_count;
-    
     CellularState* ca_states;
-    size_t ca_gen_count;
-    
     HolographicPattern* holo_pattern;
-    
-    // Final output
     char* ascii_output;
-    size_t ascii_size;
-    
 } TransmutationPipeline;
 
 // ============================================================================
-// QUATERNION OPERATIONS
+// MATH & STAGE 1: QUATERNION GESTURES
 // ============================================================================
 
-Quaternion quat_identity() {
-    return (Quaternion){1.0, 0.0, 0.0, 0.0};
+Quaternion note_to_quaternion(double freq, double dur, double amp) {
+    double n_freq = freq / 440.0;
+    double angle = 2.0 * M_PI * n_freq * dur;
+    // Map frequency/amplitude to 3D rotation axis
+    double s_freq = sin(n_freq * M_PI);
+    double c_freq = cos(n_freq * M_PI);
+    double axis_norm = sqrt(s_freq * s_freq + c_freq * c_freq + amp * amp);
+    
+    double ha = angle / 2.0;
+    double sha = sin(ha);
+    return (Quaternion){ cos(ha), (s_freq/axis_norm)*sha, (c_freq/axis_norm)*sha, (amp/axis_norm)*sha };
 }
 
-Quaternion quat_normalize(Quaternion q) {
-    double norm = sqrt(q.w*q.w + q.x*q.x + q.y*q.y + q.z*q.z);
-    if (norm < 1e-10) return quat_identity();
-    return (Quaternion){q.w/norm, q.x/norm, q.y/norm, q.z/norm};
-}
+GesturePoint* parse_musical_data(const char* data, size_t* out_count) {
+    size_t cap = 128, count = 0;
+    GesturePoint* pts = malloc(cap * sizeof(GesturePoint));
+    const char* line = data;
 
-Quaternion quat_multiply(Quaternion a, Quaternion b) {
-    return (Quaternion){
-        a.w*b.w - a.x*b.x - a.y*b.y - a.z*b.z,
-        a.w*b.x + a.x*b.w + a.y*b.z - a.z*b.y,
-        a.w*b.y - a.x*b.z + a.y*b.w + a.z*b.x,
-        a.w*b.z + a.x*b.y - a.y*b.x + a.z*b.w
-    };
-}
-
-// SLERP interpolation (from your ascii-camera-preview)
-Quaternion quat_slerp(Quaternion q1, Quaternion q2, double t) {
-    Quaternion result;
-    double dot = q1.w*q2.w + q1.x*q2.x + q1.y*q2.y + q1.z*q2.z;
-    
-    // If quaternions are very close, use linear interpolation
-    if (fabs(dot) > 0.9995) {
-        result.w = q1.w + t * (q2.w - q1.w);
-        result.x = q1.x + t * (q2.x - q1.x);
-        result.y = q1.y + t * (q2.y - q1.y);
-        result.z = q1.z + t * (q2.z - q1.z);
-        return quat_normalize(result);
-    }
-    
-    double theta = acos(fabs(dot));
-    double sin_theta = sin(theta);
-    double w1 = sin((1.0 - t) * theta) / sin_theta;
-    double w2 = sin(t * theta) / sin_theta;
-    
-    if (dot < 0) w2 = -w2;
-    
-    result.w = w1 * q1.w + w2 * q2.w;
-    result.x = w1 * q1.x + w2 * q2.x;
-    result.y = w1 * q1.y + w2 * q2.y;
-    result.z = w1 * q1.z + w2 * q2.z;
-    
-    return quat_normalize(result);
-}
-
-// ============================================================================
-// STAGE 1: PARSE SOURCE → QUATERNION SPACE
-// ============================================================================
-
-// Musical note to quaternion (frequency → rotation in 3D space)
-Quaternion note_to_quaternion(double frequency, double duration, double amplitude) {
-    // Map frequency to rotation axis
-    double normalized_freq = frequency / 440.0;  // Normalize to A440
-    double angle = 2.0 * M_PI * normalized_freq * duration;
-    
-    // Use amplitude to modulate axis
-    double axis_x = sin(normalized_freq * M_PI);
-    double axis_y = cos(normalized_freq * M_PI);
-    double axis_z = amplitude;
-    
-    // Normalize axis
-    double axis_norm = sqrt(axis_x*axis_x + axis_y*axis_y + axis_z*axis_z);
-    if (axis_norm > 1e-10) {
-        axis_x /= axis_norm;
-        axis_y /= axis_norm;
-        axis_z /= axis_norm;
-    }
-    
-    // Create quaternion from axis-angle
-    double half_angle = angle / 2.0;
-    double sin_half = sin(half_angle);
-    
-    return (Quaternion){
-        cos(half_angle),
-        axis_x * sin_half,
-        axis_y * sin_half,
-        axis_z * sin_half
-    };
-}
-
-// Simplified musical data parser (extend for Sibelius format)
-GesturePoint* parse_musical_data(const char* data, size_t size, size_t* out_count) {
-    // For demo: parse simple note format "freq,duration,amplitude\n"
-    // Real implementation would parse MusicXML or Sibelius format
-    
-    size_t capacity = 1024;
-    GesturePoint* points = malloc(capacity * sizeof(GesturePoint));
-    size_t count = 0;
-    
-    const char* ptr = data;
-    while (ptr < data + size) {
-        double freq, dur, amp;
-        if (sscanf(ptr, "%lf,%lf,%lf", &freq, &dur, &amp) == 3) {
-            if (count >= capacity) {
-                capacity *= 2;
-                points = realloc(points, capacity * sizeof(GesturePoint));
-            }
-            
-            points[count].rotation = note_to_quaternion(freq, dur, amp);
-            points[count].timestamp = count * dur;
-            points[count].magnitude = amp;
+    while (line && *line) {
+        double f, d, a;
+        if (sscanf(line, "%lf,%lf,%lf", &f, &d, &a) == 3) {
+            if (count >= cap) pts = realloc(pts, (cap *= 2) * sizeof(GesturePoint));
+            pts[count].rotation = note_to_quaternion(f, d, a);
+            pts[count].magnitude = a;
             count++;
         }
-        
-        // Move to next line
-        while (ptr < data + size && *ptr != '\n') ptr++;
-        if (ptr < data + size) ptr++;
+        line = strchr(line, '\n');
+        if (line) line++;
     }
-    
     *out_count = count;
-    return points;
+    return pts;
 }
 
 // ============================================================================
-// STAGE 2: QUATERNION → CELLULAR AUTOMATON
+// STAGE 2: HIGH-FIDELITY CA EVOLUTION (Rule 78)
 // ============================================================================
 
-// Encode quaternion sequence into CA initial state
-void quaternion_to_ca_seed(GesturePoint* gestures, size_t count, CellularState* ca) {
+void quaternion_to_ca_seed(GesturePoint* gps, size_t count, CellularState* ca) {
     memset(ca->cells, 0, CA_WIDTH);
-    
-    // Encode quaternion data into bit pattern
-    for (size_t i = 0; i < count && i < CA_WIDTH; i++) {
-        // Map quaternion magnitude to cell state
-        double mag = sqrt(
-            gestures[i].rotation.x * gestures[i].rotation.x +
-            gestures[i].rotation.y * gestures[i].rotation.y +
-            gestures[i].rotation.z * gestures[i].rotation.z
-        );
-        
-        ca->cells[i] = (uint8_t)(mag * 255.0);
+    for (size_t i = 0; i < count && (i * 4 + 3) < CA_WIDTH; i++) {
+        // Map 4D hypersphere to spatial CA zones
+        ca->cells[i * 4 + 0] = (uint8_t)((gps[i].rotation.w + 1.0) * 127.5);
+        ca->cells[i * 4 + 1] = (uint8_t)((gps[i].rotation.x + 1.0) * 127.5);
+        ca->cells[i * 4 + 2] = (uint8_t)((gps[i].rotation.y + 1.0) * 127.5);
+        ca->cells[i * 4 + 3] = (uint8_t)((gps[i].rotation.z + 1.0) * 127.5);
     }
-    
-    // Use gesture count to influence rule selection
-    ca->rule = (uint8_t)(count % 256);  // Or use a specific rule like 30, 110, etc.
+    ca->rule = 78; 
 }
 
-// Evolve cellular automaton (Wolfram rules)
-void ca_step(CellularState* current, CellularState* next) {
-    next->rule = current->rule;
-    
+void ca_step(CellularState* curr, CellularState* next) {
+    next->rule = curr->rule;
     for (int i = 0; i < CA_WIDTH; i++) {
-        uint8_t left = current->cells[(i - 1 + CA_WIDTH) % CA_WIDTH];
-        uint8_t center = current->cells[i];
-        uint8_t right = current->cells[(i + 1) % CA_WIDTH];
-        
-        // Wolfram rule lookup
-        uint8_t neighborhood = ((left > 127) << 2) | ((center > 127) << 1) | (right > 127);
-        uint8_t new_state = (current->rule >> neighborhood) & 1;
-        
-        next->cells[i] = new_state ? 255 : 0;
+        uint8_t n = ((curr->cells[(i-1+CA_WIDTH)%CA_WIDTH] > 127) << 2) |
+                    ((curr->cells[i] > 127) << 1) |
+                    (curr->cells[(i+1)%CA_WIDTH] > 127);
+        next->cells[i] = ((curr->rule >> n) & 1) ? 255 : 0;
     }
 }
 
-CellularState* evolve_ca(CellularState* initial, size_t generations, size_t* out_count) {
-    CellularState* states = malloc(generations * sizeof(CellularState));
-    
-    states[0] = *initial;
-    for (size_t i = 1; i < generations; i++) {
-        ca_step(&states[i-1], &states[i]);
-    }
-    
-    *out_count = generations;
-    return states;
-}
-
 // ============================================================================
-// STAGE 3: CELLULAR AUTOMATON → HOLOGRAPHIC ENCODING
+// STAGE 3 & 4: HOLOGRAPHIC PROJECTION & ASCII
 // ============================================================================
 
-HolographicPattern* ca_to_hologram(CellularState* states, size_t gen_count) {
-    HolographicPattern* holo = malloc(sizeof(HolographicPattern));
-    memset(holo, 0, sizeof(HolographicPattern));
-    
-    // Encode CA evolution into holographic pattern
-    for (int y = 0; y < HOLO_SIZE && y < (int)gen_count; y++) {
-        for (int x = 0; x < HOLO_SIZE && x < CA_WIDTH; x++) {
-            double cell_val = states[y].cells[x] / 255.0;
-            
-            // Create interference pattern
-            double phase_val = 2.0 * M_PI * cell_val;
-            holo->intensity[y][x] = cell_val * cell_val;
-            holo->phase[y][x] = phase_val;
-            holo->amplitude[y][x] = cell_val;
+void generate_pipeline_output(TransmutationPipeline* p) {
+    // 1. Evolve CA
+    p->ca_states = malloc(CA_GENERATIONS * sizeof(CellularState));
+    CellularState init;
+    quaternion_to_ca_seed(p->quaternion_seq, p->quat_count, &init);
+    p->ca_states[0] = init;
+    for (int i = 1; i < CA_GENERATIONS; i++) ca_step(&p->ca_states[i-1], &p->ca_states[i]);
+
+    // 2. Holographic Interference (Intensity I = |Ref + Obj|^2)
+    p->holo_pattern = malloc(sizeof(HolographicPattern));
+    for (int y = 0; y < HOLO_SIZE; y++) {
+        for (int x = 0; x < HOLO_SIZE; x++) {
+            double obj = (y < CA_GENERATIONS && x < CA_WIDTH) ? p->ca_states[y].cells[x]/255.0 : 0.0;
+            double ref = sin(x * 0.3 + y * 0.1); 
+            p->holo_pattern->intensity[y][x] = pow(ref + obj, 2) * 0.25; 
         }
     }
-    
-    return holo;
-}
 
-// ============================================================================
-// STAGE 4: HOLOGRAPHIC → ASCII RENDERING
-// ============================================================================
-
-const char ASCII_RAMP[] = " .:-=+*#%@";
-#define ASCII_RAMP_LEN 10
-
-char* hologram_to_ascii(HolographicPattern* holo, size_t* out_size) {
-    size_t width = HOLO_SIZE;
-    size_t height = HOLO_SIZE / 2;  // Compress vertically
-    size_t buffer_size = (width + 1) * height + 1;  // +1 for newlines, +1 for null
-    
-    char* output = malloc(buffer_size);
-    size_t pos = 0;
-    
-    for (size_t y = 0; y < height; y++) {
-        for (size_t x = 0; x < width; x++) {
-            double intensity = holo->intensity[y * 2][x];
-            int char_idx = (int)(intensity * (ASCII_RAMP_LEN - 1));
-            if (char_idx < 0) char_idx = 0;
-            if (char_idx >= ASCII_RAMP_LEN) char_idx = ASCII_RAMP_LEN - 1;
-            
-            output[pos++] = ASCII_RAMP[char_idx];
+    // 3. ASCII Synthesis
+    p->ascii_output = malloc((HOLO_SIZE + 1) * (HOLO_SIZE/2) + 1);
+    int pos = 0;
+    for (int y = 0; y < HOLO_SIZE/2; y++) {
+        for (int x = 0; x < HOLO_SIZE; x++) {
+            int idx = (int)(p->holo_pattern->intensity[y*2][x] * (RAMPLEN - 1));
+            p->ascii_output[pos++] = ASCII_RAMP[idx > 9 ? 9 : (idx < 0 ? 0 : idx)];
         }
-        output[pos++] = '\n';
+        p->ascii_output[pos++] = '\n';
     }
-    output[pos] = '\0';
-    
-    *out_size = pos;
-    return output;
+    p->ascii_output[pos] = '\0';
 }
 
 // ============================================================================
-// MAIN PIPELINE EXECUTION
+// EXECUTION
 // ============================================================================
 
-TransmutationPipeline* pipeline_create() {
-    TransmutationPipeline* p = malloc(sizeof(TransmutationPipeline));
-    memset(p, 0, sizeof(TransmutationPipeline));
-    return p;
-}
+int main() {
+    const char* input = "261.63,0.5,0.8\n293.66,0.5,0.7\n329.63,0.5,0.9\n392.00,0.5,0.8\n440.00,0.5,1.0\n";
+    TransmutationPipeline p = {0};
+    
+    printf("[1/4] Ingesting Harmonics...\n");
+    p.quaternion_seq = parse_musical_data(input, &p.quat_count);
+    
+    printf("[2/4] Evolving CA (Rule 78)...\n");
+    printf("[3/4] Projecting Holographic interference...\n");
+    printf("[4/4] Synthesizing ASCII output...\n\n");
+    
+    generate_pipeline_output(&p);
+    printf("%s\n", p.ascii_output);
 
-void pipeline_destroy(TransmutationPipeline* p) {
-    if (!p) return;
-    free(p->source_data);
-    free(p->quaternion_seq);
-    free(p->ca_states);
-    free(p->holo_pattern);
-    free(p->ascii_output);
-    free(p);
-}
-
-int pipeline_execute(TransmutationPipeline* p, const char* source_data, size_t source_size) {
-    printf("=== TRANSMUTATION PIPELINE ===\n\n");
-    
-    // Stage 1: Parse source → Quaternion space
-    printf("[Stage 1] Parsing source data into quaternion gesture space...\n");
-    p->quaternion_seq = parse_musical_data(source_data, source_size, &p->quat_count);
-    printf("  Generated %zu quaternion gestures\n\n", p->quat_count);
-    
-    // Stage 2: Quaternion → Cellular Automaton
-    printf("[Stage 2] Encoding quaternions into cellular automaton...\n");
-    CellularState initial_ca;
-    quaternion_to_ca_seed(p->quaternion_seq, p->quat_count, &initial_ca);
-    printf("  Using Wolfram rule %d\n", initial_ca.rule);
-    
-    p->ca_states = evolve_ca(&initial_ca, CA_GENERATIONS, &p->ca_gen_count);
-    printf("  Evolved %zu generations\n\n", p->ca_gen_count);
-    
-    // Stage 3: CA → Holographic encoding
-    printf("[Stage 3] Creating holographic interference pattern...\n");
-    p->holo_pattern = ca_to_hologram(p->ca_states, p->ca_gen_count);
-    printf("  Generated %dx%d holographic pattern\n\n", HOLO_SIZE, HOLO_SIZE);
-    
-    // Stage 4: Hologram → ASCII rendering
-    printf("[Stage 4] Rendering hologram as ASCII art...\n");
-    p->ascii_output = hologram_to_ascii(p->holo_pattern, &p->ascii_size);
-    printf("  Created %zu character ASCII output\n\n", p->ascii_size);
-    
-    return 0;
-}
-
-// ============================================================================
-// DEMONSTRATION
-// ============================================================================
-
-int main(int argc, char** argv) {
-    // Example musical data (freq,duration,amplitude)
-    // These represent a simple ascending scale
-    const char* musical_input = 
-        "261.63,0.5,0.8\n"   // C4
-        "293.66,0.5,0.7\n"   // D4
-        "329.63,0.5,0.9\n"   // E4
-        "349.23,0.5,0.6\n"   // F4
-        "392.00,0.5,0.8\n"   // G4
-        "440.00,0.5,1.0\n"   // A4
-        "493.88,0.5,0.7\n"   // B4
-        "523.25,1.0,0.9\n";  // C5
-    
-    TransmutationPipeline* pipeline = pipeline_create();
-    
-    pipeline_execute(pipeline, musical_input, strlen(musical_input));
-    
-    printf("=== TRANSMUTATION COMPLETE ===\n\n");
-    printf("ASCII Output:\n");
-    printf("%s\n", pipeline->ascii_output);
-    
-    // Show some intermediate data
-    printf("\n=== DEBUG INFO ===\n");
-    printf("First quaternion: (%.3f, %.3f, %.3f, %.3f)\n",
-           pipeline->quaternion_seq[0].rotation.w,
-           pipeline->quaternion_seq[0].rotation.x,
-           pipeline->quaternion_seq[0].rotation.y,
-           pipeline->quaternion_seq[0].rotation.z);
-    
-    printf("CA Rule: %d\n", pipeline->ca_states[0].rule);
-    printf("First CA generation pattern: ");
-    for (int i = 0; i < 32; i++) {
-        printf("%c", pipeline->ca_states[0].cells[i] > 127 ? '#' : '.');
-    }
-    printf("...\n");
-    
-    pipeline_destroy(pipeline);
-    
+    free(p.quaternion_seq); free(p.ca_states); free(p.holo_pattern); free(p.ascii_output);
     return 0;
 }
