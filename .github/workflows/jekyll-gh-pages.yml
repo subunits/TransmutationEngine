@@ -1,4 +1,4 @@
-name: Deploy Transmutation Engine
+name: Deploy Jekyll Site
 
 on:
   push:
@@ -27,11 +27,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
-          # Unique name per run to bypass the "Count: 3" error
+          path: ./_site
           name: github-pages-${{ github.run_id }}
 
   deploy:
