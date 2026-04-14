@@ -33,8 +33,8 @@ Explores **transmutation**: fundamental transformation between representational 
 
 ## Files
 
-- `TransmutationEngine.c` - Clean output
-- `TransmutationEngine_verbose.c` - Detailed logging
+- [TransmutationEngine.c](https://raw.githubusercontent.com/subunits/TransmutationEngine/refs/heads/main/TransmutationEngine.c) - Clean output
+- [TransmutationEngine_verbose.c](https://raw.githubusercontent.com/subunits/TransmutationEngine/refs/heads/main/TransmutationEngine_verbose.c) - Detailed logging
 
 ## Author
 
