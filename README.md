@@ -40,4 +40,4 @@ Explores **transmutation**: fundamental transformation between representational 
 
 Michael Listrom - Exploring computational morphisms between ancient and modern representational systems
 
-see: https://www.onlinegdb.com/online_c_compiler
+see: [https://www.onlinegdb.com/online_c_compiler](https://www.onlinegdb.com/online_c_compiler)
