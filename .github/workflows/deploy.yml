@@ -10,6 +10,7 @@ permissions:
   pages: write
   id-token: write
 
+# This is what stops the "Multiple Artifacts" error you were seeing
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -27,8 +28,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # This assumes your HTML files are in the root directory. 
-          # Change to './dist' or './public' if your files are in a subfolder.
           path: '.'
 
   deploy:
