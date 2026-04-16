@@ -24,7 +24,7 @@ Takes musical input (frequency, duration, amplitude) and:
 ## Background
 
 Synthesizes techniques from:
-- Quaternion gesture systems (UQGVS)
+- Quaternion gesture systems ([UQGVS](https://github.com/subunits/UQGVS))
 - Cellular automata (FDCA-Simulator)  
 - Holographic encoding (Body-Holographic)
 - ASCII rendering (ascii-camera-preview)
