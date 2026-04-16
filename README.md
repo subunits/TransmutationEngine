@@ -27,7 +27,7 @@ Synthesizes techniques from:
 - Quaternion gesture systems ([UQGVS](https://github.com/subunits/UQGVS))
 - Cellular automata ([FDCA-Simulator](https://github.com/subunits/FDCA-Simulator))  
 - Holographic encoding ([Body-Holographic](https://github.com/subunits/Body-Holographic))
-- ASCII rendering (ascii-camera-preview)
+- ASCII rendering ([ascii-camera-preview](https://github.com/subunits/ascii-camera-preview))
 
 Explores **transmutation**: fundamental transformation between representational domains.
 
