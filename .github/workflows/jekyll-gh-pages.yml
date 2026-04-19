@@ -1,4 +1,4 @@
-name: Deploy Cayman Slate Theme
+name: Deploy Midnight Dark
 
 on:
   push:
@@ -21,18 +21,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Theme Config
+      - name: Setup Midnight Theme
         run: |
-          # Kill old files
-          rm -rf index.html _layouts/ _includes/
+          # Clean slate
+          rm -rf _layouts/ _includes/ assets/ index.html
           
-          # Set the standard dark theme
-          echo "remote_theme: pages-themes/cayman-slate@v0.2.0" > _config.yml
-          echo "plugins: [jekyll-remote-theme]" >> _config.yml
+          # Force Midnight theme
+          echo "theme: jekyll-theme-midnight" > _config.yml
           echo "title: Transmutation Engine" >> _config.yml
           
-          # Create the homepage
-          echo -e "---\nlayout: default\n---\n# Transmutation Engine\n\nThis is a cohesive, dark-mode interface. Clean, regular, and professional." > index.md
+          # Create a long-form page to ensure scrolling works
+          echo -e "---\nlayout: default\n---\n# Transmutation Engine\n\n### Status: Cohesive Dark Mode Active\n\nThis is the Midnight theme. It is a regular Jekyll theme that supports standard scrolling and professional formatting.\n\n" > index.md
+          
+          # Add content to force a scrollbar
+          for i in {1..30}; do 
+            echo "#### Sequence $i" >> index.md
+            echo "Processing data stream... stability at 100%. No hacker remnants detected." >> index.md
+          done
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
