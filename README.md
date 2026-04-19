@@ -35,8 +35,8 @@ Explores **transmutation**: fundamental transformation between representational 
 
 - [TransmutationEngine.c](https://raw.githubusercontent.com/subunits/TransmutationEngine/refs/heads/main/TransmutationEngine.c) - Clean output
 - [TransmutationEngine_verbose.c](https://raw.githubusercontent.com/subunits/TransmutationEngine/refs/heads/main/TransmutationEngine_verbose.c) - Detailed logging
-- [MIDI](https://raw.githubusercontent.com/subunits/TransmutationEngine/refs/heads/main/TransmutationEngine_MIDI.c) - Potential Input
-- [DEMO](https://raw.githubusercontent.com/subunits/TransmutationEngine/refs/heads/main/TransmutateDemo.c) - Keynote
+- [TransmutationEngine_MIDI.c](https://raw.githubusercontent.com/subunits/TransmutationEngine/refs/heads/main/TransmutationEngine_MIDI.c) - Potential Input
+- [TransmutateDemo.c](https://raw.githubusercontent.com/subunits/TransmutationEngine/refs/heads/main/TransmutateDemo.c) - Keynote
 
 ## Author
 
