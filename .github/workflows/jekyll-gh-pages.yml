@@ -1,4 +1,4 @@
-name: Deploy Jekyll Dark Force
+name: Deploy Jekyll
 
 on:
   push:
@@ -21,12 +21,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # This creates the professional Dark Mode theme on the fly
-      - name: Inject Dark Theme
+      # THIS IS THE NUCLEAR STEP
+      # It creates a fresh config and index, and deletes the _layouts 
+      # folder that GitHub sometimes sneaks in during the build.
+      - name: Wipe Theme & Force Dark
         run: |
-          echo 'remote_theme: jekyll/minima' > _config.yml
-          echo 'minima: {skin: dark}' >> _config.yml
-          echo 'plugins: [jekyll-remote-theme]' >> _config.yml
+          rm -rf _layouts/
+          echo "theme: jekyll-theme-minimal" > _config.yml
+          echo "remote_theme: jekyll/minima" >> _config.yml
+          echo "minima: {skin: dark}" >> _config.yml
           echo -e "---\nlayout: home\n---\n# Transmutation Engine\nClean Dark Mode Active." > index.md
 
       - name: Setup Pages
