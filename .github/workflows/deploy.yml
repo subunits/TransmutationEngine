@@ -1,0 +1,53 @@
+name: Dark Theme Pro
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build Black Site
+        run: |
+          COMMIT_DATE=$(git log -1 --format=%cd --date=format:'%Y-%m-%d')
+          echo "<!DOCTYPE html><html><head><meta charset='UTF-8'><style>
+          body { background: #000; color: #ccc; font-family: sans-serif; padding: 40px; line-height: 1.6; max-width: 850px; margin: 0 auto; }
+          h1, h2, h3 { color: #fff; border-bottom: 1px solid #333; }
+          pre { background: #111; padding: 15px; border-radius: 5px; border: 1px solid #333; color: #fff; overflow-x: auto; }
+          code { background: #222; color: #ff7b72; padding: 2px 4px; border-radius: 3px; }
+          a { color: #58a6ff; }
+          .meta { color: #555; font-family: monospace; font-size: 12px; margin-bottom: 20px; }
+          </style></head><body><div class='meta'>SYSTEM_STATUS: LIVE // LAST_UPDATE: $COMMIT_DATE</div>" > index.html
+          
+          npx lowdown README.md >> index.html
+          echo "</body></html>" >> index.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy
+        uses: actions/deploy-pages@v4
