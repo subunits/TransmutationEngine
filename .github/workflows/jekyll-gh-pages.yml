@@ -1,4 +1,4 @@
-name: Deploy Jekyll
+name: Deploy Modern Cohesive UI
 
 on:
   push:
@@ -21,12 +21,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Force Professional Dark Theme
+      - name: Build Custom UI
         run: |
-          rm -rf _layouts/ _includes/ assets/ css/ index.html
-          echo "remote_theme: pmarsceill/just-the-docs" > _config.yml
-          echo "color_scheme: dark" >> _config.yml
-          echo -e "---\nlayout: default\ntitle: Home\nnav_order: 1\n---\n# Transmutation Engine\n\n### System Status: Professional\nThis is the high-fidelity dark theme. No green text, no boring blog layout." > index.md
+          # Kill all legacy junk
+          rm -rf _layouts/ _includes/ assets/ css/ index.html index.md _config.yml
+          
+          # Create a clean config
+          echo "theme: " > _config.yml
+          
+          # Create the Modern High-Fidelity Index
+          echo -e "---\nlayout: none\n---\n<!DOCTYPE html>\n<html lang='en'>\n<head>\n<meta charset='UTF-8'>\n<meta name='viewport' content='width=device-width, initial-scale=1.0'>\n<title>Transmutation Engine</title>\n<style>\n  :root { --bg: #020617; --card: #0f172a; --accent: #10b981; --text-main: #f8fafc; --text-dim: #94a3b8; }\n  body { background-color: var(--bg); color: var(--text-main); font-family: -apple-system, system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; overflow: hidden; }\n  .container { position: relative; width: 100%; max-width: 600px; padding: 20px; }\n  .glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: var(--accent); filter: blur(120px); opacity: 0.15; z-index: 0; }\n  .card { position: relative; z-index: 1; background: var(--card); border: 1px solid rgba(255,255,255,0.1); padding: 3rem; border-radius: 24px; backdrop-filter: blur(10px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); text-align: center; }\n  h1 { font-size: 3rem; margin: 0; font-weight: 800; letter-spacing: -0.05em; background: linear-gradient(to bottom right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }\n  p { font-size: 1.125rem; color: var(--text-dim); line-height: 1.6; margin-top: 1.5rem; }\n  .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--accent); border-radius: 99px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2rem; }\n  .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }\n</style>\n</head>\n<body>\n  <div class='glow'></div>\n  <div class='container'>\n    <div class='card'>\n      <div class='badge'><span class='dot'></span> System Operational</div>\n      <h1>Transmutation Engine</h1>\n      <p>Refining digital chaos into structured intelligence. A minimal, high-fidelity processing interface for the modern web.</p>\n    </div>\n  </div>\n</body>\n</html>" > index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
