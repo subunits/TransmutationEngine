@@ -1,4 +1,4 @@
-name: Deploy Slick Minimal Dark
+name: Deploy Clean Dark Engine
 
 on:
   push:
@@ -21,21 +21,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build Custom Minimal UI
+      - name: Build Pure Dark UI
         run: |
-          # Kill all legacy junk and credits
+          # 1. KILL EVERYTHING. No leftovers allowed.
           rm -rf _layouts/ _includes/ assets/ index.html index.md _config.yml
           
-          # Force a theme that is clean but strip the header/footer junk
-          echo "theme: jekyll-theme-minimal" > _config.yml
+          # 2. BLANK CONFIG. Tells GitHub: "Do not use your shitty themes."
+          echo "theme: " > _config.yml
           
-          # This custom CSS block kills the "View on GitHub" and maintained-by sections
-          echo -e "---\nlayout: default\n---\n<style>\n  header, footer { display: none !important; }\n  .wrapper { max-width: 800px !important; background: #0d1117 !important; color: #c9d1d9 !important; padding: 40px !important; }\n  body { background-color: #0d1117 !important; }\n  h1 { border-bottom: 1px solid #30363d; padding-bottom: 10px; color: #58a6ff; }\n  h4 { color: #8b949e; margin-top: 2rem; }\n</style>\n\n# Transmutation Engine\n\n### System Status: Cohesive & Clean\nNo headers. No footers. No GitHub branding. Just the data.\n\n" > index.md
+          # 3. PURE HTML. This is the only way to ensure no "mattgraham" credits.
+          echo -e "<!DOCTYPE html>\n<html lang='en'>\n<head>\n<meta charset='UTF-8'>\n<meta name='viewport' content='width=device-width, initial-scale=1.0'>\n<title>Transmutation Engine</title>\n<style>\n  body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, sans-serif; line-height: 1.6; padding: 40px; max-width: 800px; margin: 0 auto; }\n  h1 { color: #58a6ff; border-bottom: 1px solid #30363d; padding-bottom: 10px; font-size: 2.5rem; }\n  .status { color: #3fb950; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }\n  .entry { margin-top: 30px; padding: 20px; border-left: 2px solid #30363d; background: #161b22; border-radius: 0 8px 8px 0; }\n  h4 { margin: 0; color: #8b949e; }\n</style>\n</head>\n<body>\n  <p class='status'>System Operational</p>\n  <h1>Transmutation Engine</h1>\n  <p>Cohesive dark interface active. No external credits. No clutter.</p>" > index.html
           
+          # Add the scrollable content
           for i in {1..20}; do 
-            echo "#### Sequence $i" >> index.md
-            echo "Stability check: 100%. Interface refined." >> index.md
+            echo "<div class='entry'><h4>Sequence $i</h4><p>Data stream stable. Refinement complete.</p></div>" >> index.html
           done
+          
+          echo "</body></html>" >> index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
