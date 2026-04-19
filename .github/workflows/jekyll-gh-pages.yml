@@ -1,44 +1,54 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Deploy Slick Minimal Dark
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Build Custom Minimal UI
+        run: |
+          # Kill all legacy junk and credits
+          rm -rf _layouts/ _includes/ assets/ index.html index.md _config.yml
+          
+          # Force a theme that is clean but strip the header/footer junk
+          echo "theme: jekyll-theme-minimal" > _config.yml
+          
+          # This custom CSS block kills the "View on GitHub" and maintained-by sections
+          echo -e "---\nlayout: default\n---\n<style>\n  header, footer { display: none !important; }\n  .wrapper { max-width: 800px !important; background: #0d1117 !important; color: #c9d1d9 !important; padding: 40px !important; }\n  body { background-color: #0d1117 !important; }\n  h1 { border-bottom: 1px solid #30363d; padding-bottom: 10px; color: #58a6ff; }\n  h4 { color: #8b949e; margin-top: 2rem; }\n</style>\n\n# Transmutation Engine\n\n### System Status: Cohesive & Clean\nNo headers. No footers. No GitHub branding. Just the data.\n\n" > index.md
+          
+          for i in {1..20}; do 
+            echo "#### Sequence $i" >> index.md
+            echo "Stability check: 100%. Interface refined." >> index.md
+          done
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
-  # Deployment job
   deploy:
     environment:
       name: github-pages
@@ -48,4 +58,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
