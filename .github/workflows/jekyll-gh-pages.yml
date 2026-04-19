@@ -21,14 +21,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # This forces Jekyll to ignore GitHub's "Hacker" memory
-      - name: Purge GitHub Memory
+      - name: Force Professional Dark Theme
         run: |
-          rm -rf _layouts/ _includes/ assets/
-          echo "theme: jekyll-theme-minimal" > _config.yml
-          echo "remote_theme: jekyll/minima" >> _config.yml
-          echo "minima: {skin: dark}" >> _config.yml
-          echo -e "---\nlayout: home\n---\n# Transmutation Engine\nStatus: Dark Mode Engaged." > index.md
+          rm -rf _layouts/ _includes/ assets/ css/ index.html
+          echo "remote_theme: pmarsceill/just-the-docs" > _config.yml
+          echo "color_scheme: dark" >> _config.yml
+          echo -e "---\nlayout: default\ntitle: Home\nnav_order: 1\n---\n# Transmutation Engine\n\n### System Status: Professional\nThis is the high-fidelity dark theme. No green text, no boring blog layout." > index.md
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
