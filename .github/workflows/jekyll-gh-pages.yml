@@ -1,4 +1,4 @@
-name: Deploy Midnight Dark
+name: Deploy Slick Minimal Dark
 
 on:
   push:
@@ -21,22 +21,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Midnight Theme
+      - name: Build Custom Minimal UI
         run: |
-          # Clean slate
-          rm -rf _layouts/ _includes/ assets/ index.html
+          # Kill all legacy junk and credits
+          rm -rf _layouts/ _includes/ assets/ index.html index.md _config.yml
           
-          # Force Midnight theme
-          echo "theme: jekyll-theme-midnight" > _config.yml
-          echo "title: Transmutation Engine" >> _config.yml
+          # Force a theme that is clean but strip the header/footer junk
+          echo "theme: jekyll-theme-minimal" > _config.yml
           
-          # Create a long-form page to ensure scrolling works
-          echo -e "---\nlayout: default\n---\n# Transmutation Engine\n\n### Status: Cohesive Dark Mode Active\n\nThis is the Midnight theme. It is a regular Jekyll theme that supports standard scrolling and professional formatting.\n\n" > index.md
+          # This custom CSS block kills the "View on GitHub" and maintained-by sections
+          echo -e "---\nlayout: default\n---\n<style>\n  header, footer { display: none !important; }\n  .wrapper { max-width: 800px !important; background: #0d1117 !important; color: #c9d1d9 !important; padding: 40px !important; }\n  body { background-color: #0d1117 !important; }\n  h1 { border-bottom: 1px solid #30363d; padding-bottom: 10px; color: #58a6ff; }\n  h4 { color: #8b949e; margin-top: 2rem; }\n</style>\n\n# Transmutation Engine\n\n### System Status: Cohesive & Clean\nNo headers. No footers. No GitHub branding. Just the data.\n\n" > index.md
           
-          # Add content to force a scrollbar
-          for i in {1..30}; do 
+          for i in {1..20}; do 
             echo "#### Sequence $i" >> index.md
-            echo "Processing data stream... stability at 100%. No hacker remnants detected." >> index.md
+            echo "Stability check: 100%. Interface refined." >> index.md
           done
 
       - name: Setup Pages
