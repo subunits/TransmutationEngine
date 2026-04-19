@@ -1,5 +1,4 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Deploy Jekyll Dark Force
 
 on:
   push:
@@ -13,7 +12,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -21,13 +20,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # This creates the professional Dark Mode theme on the fly
+      - name: Inject Dark Theme
+        run: |
+          echo 'remote_theme: jekyll/minima' > _config.yml
+          echo 'minima: {skin: dark}' >> _config.yml
+          echo 'plugins: [jekyll-remote-theme]' >> _config.yml
+          echo -e "---\nlayout: home\n---\n# Transmutation Engine\nClean Dark Mode Active." > index.md
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
