@@ -1,0 +1,30 @@
+# Site Settings
+title: Transmutation Engine
+email: your-email@example.com
+description: >- # Write your description between the quotes
+  Project documentation and engine specs.
+baseurl: "/TransmutationEngine" # The subpath of your site, e.g. /project-name
+url: "https://subunits.github.io"
+
+# Build Settings
+remote_theme: jekyll/minima
+
+# Theme Configuration
+minima:
+  skin: dark # Options: dark, solarized-light, solarized-dark
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+
+# Exclude these from the build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
