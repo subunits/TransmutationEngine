@@ -1,8 +1,8 @@
-name: Deploy README to Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main"] # Or "master"
   workflow_dispatch:
 
 permissions:
@@ -10,8 +10,6 @@ permissions:
   pages: write
   id-token: write
 
-# This is the KILLER for that "Multiple artifacts" error.
-# It forces GitHub to finish one run before starting another.
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -23,24 +21,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22 # Use the current LTS
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build # Ensure this outputs to a folder (usually 'dist' or 'build')
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # This is the "Goddam magic" step. 
-      # It converts README.md to index.html automatically.
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          # Change "dist" to your actual build folder (e.g., "public" or ".")
+          path: './dist'
 
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps: deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
