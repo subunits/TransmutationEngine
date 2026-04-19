@@ -1,4 +1,4 @@
-name: Deploy Clean Dark Engine
+name: Restore Default Theme
 
 on:
   push:
@@ -21,23 +21,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build Pure Dark UI
+      - name: Reset to Default
         run: |
-          # 1. KILL EVERYTHING. No leftovers allowed.
-          rm -rf _layouts/ _includes/ assets/ index.html index.md _config.yml
+          # Kill the custom HTML and the old config
+          rm -rf index.html _layouts/ _includes/ assets/ _config.yml
           
-          # 2. BLANK CONFIG. Tells GitHub: "Do not use your shitty themes."
-          echo "theme: " > _config.yml
+          # Set theme to the GitHub Default (Minima)
+          echo "theme: minima" > _config.yml
+          echo "title: Transmutation Engine" >> _config.yml
           
-          # 3. PURE HTML. This is the only way to ensure no "mattgraham" credits.
-          echo -e "<!DOCTYPE html>\n<html lang='en'>\n<head>\n<meta charset='UTF-8'>\n<meta name='viewport' content='width=device-width, initial-scale=1.0'>\n<title>Transmutation Engine</title>\n<style>\n  body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, sans-serif; line-height: 1.6; padding: 40px; max-width: 800px; margin: 0 auto; }\n  h1 { color: #58a6ff; border-bottom: 1px solid #30363d; padding-bottom: 10px; font-size: 2.5rem; }\n  .status { color: #3fb950; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }\n  .entry { margin-top: 30px; padding: 20px; border-left: 2px solid #30363d; background: #161b22; border-radius: 0 8px 8px 0; }\n  h4 { margin: 0; color: #8b949e; }\n</style>\n</head>\n<body>\n  <p class='status'>System Operational</p>\n  <h1>Transmutation Engine</h1>\n  <p>Cohesive dark interface active. No external credits. No clutter.</p>" > index.html
-          
-          # Add the scrollable content
-          for i in {1..20}; do 
-            echo "<div class='entry'><h4>Sequence $i</h4><p>Data stream stable. Refinement complete.</p></div>" >> index.html
-          done
-          
-          echo "</body></html>" >> index.html
+          # Create a standard markdown file
+          echo -e "---\nlayout: home\n---\n# Transmutation Engine\n\nThis is the default GitHub Pages look. No custom CSS, no forced panels, no extra junk." > index.md
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
