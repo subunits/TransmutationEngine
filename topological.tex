@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+
+\title{Foundations of Kähler and Hyperkähler Geometry}
+\author{Technical Overview}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+In the study of differential geometry, Kähler and Hyperkähler manifolds represent a critical intersection of Riemannian, complex, and symplectic structures. These manifolds are central to modern theoretical physics, particularly in string theory and supersymmetric field theories.
+
+\section{Kähler Manifolds}
+A Kähler manifold is a manifold $M$ equipped with a Riemannian metric $g$ and a complex structure $J$ that are compatible. The fundamental 2-form (or Kähler form) is defined by:
+\begin{equation}
+    \omega(X, Y) = g(JX, Y)
+\end{equation}
+
+The manifold is Kähler if and only if $\omega$ is closed ($d\omega = 0$). This condition implies that the holonomy group of the metric is contained within the unitary group $U(n)$ \cite{huybrechts}.
+
+\subsection{Key Properties}
+\begin{itemize}
+    \item \textbf{Kähler Potential:} Locally, the metric can be derived from a scalar potential $\Phi$ such that $g_{i\bar{j}} = \partial_i \partial_{\bar{j}} \Phi$.
+    \item \textbf{Hodge Decomposition:} The cohomology of a compact Kähler manifold admits a decomposition $H^k(M, \mathbb{C}) = \bigoplus_{p+q=k} H^{p,q}(M)$.
+\end{itemize}
+
+\section{Hyperkähler Manifolds}
+A Hyperkähler manifold is a Riemannian manifold $(M, g)$ that admits three distinct complex structures $I, J, K$ satisfying the quaternionic relations:
+\begin{equation}
+    I^2 = J^2 = K^2 = IJK = -1
+\end{equation}
+
+For such a manifold, the metric is Kähler with respect to all three structures simultaneously. This forces the holonomy group to be a subgroup of the symplectic group $Sp(n)$, which implies that the manifold is Ricci-flat ($R_{ij} = 0$) \cite{beauville}.
+
+\section{Comparison of Structures}
+The following table summarizes the structural differences between these two classes of manifolds.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Property} & \textbf{Kähler} & \textbf{Hyperkähler} \\ \midrule
+Complex Structures & 1 ($J$) & 3 ($I, J, K$) \\
+Holonomy Group & $U(n)$ & $Sp(n)$ \\
+Curvature Constraint & None (General) & Ricci-Flat \\
+Real Dimension & $2n$ & $4n$ \\ \bottomrule
+\end{tabular}
+\caption{Comparative analysis of Kähler and Hyperkähler properties.}
+\end{table}
+
+\begin{thebibliography}{9}
+
+\bibitem{huybrechts}
+D. Huybrechts, \textit{Complex Geometry: An Introduction}, Universitext, Springer-Verlag, Berlin, 2005.
+
+\bibitem{beauville}
+A. Beauville, \textit{Variétés Kählériennes dont la première classe de Chern est nulle}, J. Differential Geom. 18 (1983), no. 4, 755--782.
+
+\bibitem{moroianu}
+A. Moroianu, \textit{Lectures on Kähler Geometry}, London Mathematical Society Student Texts, Cambridge University Press, 2007.
+
+\bibitem{hitchin}
+N. J. Hitchin, A. Karlhede, U. Lindström and M. Roček, \textit{Hyperkähler metrics and supersymmetry}, Comm. Math. Phys. 108 (1987), no. 4, 535--589.
+
+\end{thebibliography}
+
+\end{document}
