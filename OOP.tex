@@ -1,17 +1,15 @@
-\documentclass[12pt, a4paper]{article}
+\documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
 \usepackage{xcolor}
-\usepackage{titlesec}
-\usepackage{enumitem}
 \usepackage{hyperref}
 
-% Basic Color Formatting
+% Simple color formatting for sections
+\usepackage{titlesec}
 \titleformat{\section}{\large\bfseries\color{blue}}{}{0em}{}[\titlerule]
-\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
 
-\title{The Four Pillars of Object-Oriented Programming: A Crash Course}
-\author{Computer Science Education Series}
+\title{OOP Pillars: A Crash Course}
+\author{Computer Science Series}
 \date{\today}
 
 \begin{document}
@@ -19,23 +17,29 @@
 \maketitle
 
 \section{Introduction}
-Object-Oriented Programming (OOP) is a paradigm based on the concept of "objects," which can contain data and code[cite: 4, 5].
+Object-Oriented Programming (OOP) is a paradigm centered around "objects" that contain both data and behavior \cite{grady2007}.
 
 \section{1. Abstraction}
-Abstraction hides implementation details while showing functionality[cite: 4, 5].
+Abstraction focuses on the essential characteristics of an object, hiding the background implementation details from the user[cite: 4, 5].
 
 \section{2. Encapsulation}
-Encapsulation binds together code and data, keeping both safe from outside interference[cite: 4, 5].
+Encapsulation wraps data and methods into a single unit (class) and restricts direct access to protect the object's internal state \cite{martin2008}.
 
 \section{3. Inheritance}
-Inheritance allows one object to acquire the properties and behaviors of a parent object[cite: 4, 5].
+Inheritance allows a child class to derive properties and behaviors from a parent class, promoting code reuse[cite: 4, 5].
 
 \section{4. Polymorphism}
-Polymorphism allows objects of different types to be treated as objects of a common base type[cite: 4, 5].
+Polymorphism allows different classes to be treated as instances of the same parent class through a uniform interface \cite{stroustrup2013}.
 
 \begin{thebibliography}{9}
 \bibitem{grady2007} 
-Booch, G., et al. (2007). \textit{Object-Oriented Analysis and Design with Applications}.
+Booch, G., et al. (2007). \textit{Object-Oriented Analysis and Design with Applications}. Addison-Wesley.[cite: 4, 5]
+
+\bibitem{martin2008} 
+Martin, R. C. (2008). \textit{Clean Code}. Prentice Hall.[cite: 4, 5]
+
+\bibitem{stroustrup2013} 
+Stroustrup, B. (2013). \textit{The C++ Programming Language}. Addison-Wesley.[cite: 4, 5]
 \end{thebibliography}
 
 \end{document}
