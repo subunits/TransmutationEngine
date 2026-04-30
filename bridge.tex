@@ -1,0 +1,80 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstset{
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\title{The Bridge: Theory to Implementation}
+\author{Connecting OOP Pillars to Functional Operations}
+\date{April 29, 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+Software architecture relies on the synergy between structural theory and mechanical execution. We achieve this by mapping the four core pillars of Object-Oriented Programming (OOP)—Abstraction, Encapsulation, Herencia, and Polimorfismo—onto four fundamental operations: Instantiate, Assign, Compare, and Loop.
+
+\section{Implementation Mechanics}
+
+\subsection{Instantiate (Creating the Object)}
+Instantiating is the act of bringing a blueprint to life in memory. This is where Herencia manifests, as you can instantiate a child class that inherits all properties of its parent.
+
+\begin{lstlisting}[language=Java]
+// Instantiate: Building a concrete object from a class blueprint
+Guitar myGuitar = new Guitar();
+\end{lstlisting}
+
+\subsection{Assign (Managing the Secret)}
+Assignment is the mechanical tool for Encapsulation. By using methods to assign values, we keep the internal state a "secret" and ensure data integrity.
+
+\begin{lstlisting}[language=Java]
+// Assign: Using encapsulation to set a value securely
+myGuitar.setVolume(11);
+\end{lstlisting}
+
+\subsection{Compare (Driving Logic)}
+Comparison allows us to leverage Polimorfismo. We compare states or types to decide which specific behavior an object should execute.
+
+\begin{lstlisting}[language=Java]
+// Compare: Decision making based on object state
+if (myGuitar.getVolume() > 10) {
+    applyDistortion();
+}
+\end{lstlisting}
+
+\subsection{Loop (Efficiency via Abstraction)}
+Looping works hand-in-hand with Abstraction. We can iterate through a collection of complex objects and trigger a simple, shared command without worrying about the underlying implementation.
+
+\begin{lstlisting}[language=Java]
+// Loop: Applying abstracted methods across multiple instances
+for (Guitar g : studioRack) {
+    g.tune(); // Abstraction: We know it tunes, we don't care how
+}
+\end{lstlisting}
+
+\section{Conclusion}
+By mastering these four operations, the "secrets" of encapsulation and the logic of inheritance become functional, scalable code.
+
+\end{document}
