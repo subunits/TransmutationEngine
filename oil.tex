@@ -1,0 +1,63 @@
+\documentclass[12pt]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{xcolor}
+\usepackage{listings}
+
+% --- Code Highlighting Setup ---
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    tabsize=2
+}
+
+% --- Document Metadata ---
+\title{Operational Execution Logic \\ \large Machine-Level Implementation}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Memory Allocation and Pointers}
+Instantiate acts as a memory allocation command that requests a specific block of heap space from the system. When this operation is executed, the runtime calculates the byte-size of the class template, carves out that space in RAM, and returns a memory address. This address serves as a pointer, allowing the processor to locate and interact with the data stored at that specific physical coordinate in the hardware.
+
+\begin{lstlisting}[language=Java]
+// System requests heap space and returns memory address
+Guitar myGuitar = new Guitar(); 
+\end{lstlisting}
+
+\section{Bitwise Movement and Gating}
+Assign is the mechanical movement of bits from one register to a designated memory offset. From a machine perspective, it overwrites the existing electrical states at a specific address with new data. When gated by methods, the CPU must first execute a validation check, ensuring the incoming bit pattern is compatible before allowing the write operation to modify the object's internal state in memory.
+
+\begin{lstlisting}[language=Java]
+// Overwriting electrical states at a designated memory offset
+myGuitar.setVolume(11); 
+\end{lstlisting}
+
+\section{Control Flow and Instruction Pointers}
+Compare and Loop function as hardware-level control flow instructions that manipulate the instruction pointer. A comparison causes the CPU to evaluate the difference between two values and set status flags in its register. If the resulting flag matches a specific condition, the system executes a jump instruction that resets the instruction pointer to a previous memory address, forcing the processor to repeat a sequence of operations until the flag state changes.
+
+\begin{lstlisting}[language=Java]
+// Evaluating values to set CPU flags and jump instruction pointers
+for (Guitar g : studioRack) {
+    if (g.getVolume() > 10) {
+        g.tune();
+    }
+}
+\end{lstlisting}
+
+\end{document}
