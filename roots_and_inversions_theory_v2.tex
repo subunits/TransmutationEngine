@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage[numbers]{natbib}
+\geometry{margin=1in}
+
+\title{The Harmonic Foundation: Roots, Inversions, and Theoretical Context}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{The Fundamental Root}
+In modern harmonic theory, the \textbf{root} is the "parent" note of a chord. While early Renaissance theorists focused on the intervals between individual voices (the \textit{regola delle terze e seste}), a paradigm shift occurred in the 18th century.
+
+As Jean-Philippe Rameau proposed in his seminal work, \textit{Traité de l'harmonie} (1722), chords in different inversions are functionally equivalent because they share the same root \citep{rameau1722}. This concept of the \textbf{fundamental bass} allows theorists to track the underlying harmonic progression even when the literal bass line is melodic or inverted.
+
+\section{Triad Inversions}
+An inversion occurs when a note other than the root is placed in the lowest voice. This alters the chord's stability and "flavor" without changing its functional identity.
+
+\subsection{C Major Triad Examples $\{C, E, G\}$}
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Position} & \textbf{Bass Note} & \textbf{Figured Bass} & \textbf{Slash Notation} \\ \midrule
+Root Position     & C (Root)           & --- (or $\binom{5}{3}$) & C                       \\
+First Inversion   & E (3rd)            & $6$ (or $\binom{6}{3}$) & C/E                     \\
+Second Inversion  & G (5th)            & $\binom{6}{4}$          & C/G                     \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\section{Seventh Chord Inversions}
+With the addition of a fourth pitch class (the 7th), a third inversion becomes possible. For a G dominant seventh chord $\{G, B, D, F\}$:
+\begin{itemize}
+    \item \textbf{Root Position:} $G$ in bass (Symbol: $7$)
+    \item \textbf{First Inversion:} $B$ in bass (Symbol: $\binom{6}{5}$)
+    \item \textbf{Second Inversion:} $D$ in bass (Symbol: $\binom{4}{3}$)
+    \item \textbf{Third Inversion:} $F$ in bass (Symbol: $\binom{4}{2}$ or $2$)
+\end{itemize}
+
+\section{Voice Leading and Stability}
+The primary application of inversions in composition is the achievement of \textit{Fließender Gesang} (smooth melodic flow).
+
+\begin{enumerate}
+    \item \textbf{The Rule of the Shortest Way:} Inversions allow voices to move the minimum distance between chords, maintaining common tones \citep{schoenberg1911}.
+    \item \textbf{Stability:} Root position triads are maximally stable. Second inversions ($\binom{6}{4}$) are treated as unstable or dissonant in classical counterpoint, requiring specific resolution, as detailed in Johann Joseph Fux's \textit{Gradus ad Parnassum} \citep{fux1725}.
+\end{enumerate}
+
+\begin{thebibliography}{9}
+\bibitem{fux1725}
+Fux, J. J. (1725). \textit{Gradus ad Parnassum}. (A. Mann, Trans., 1943). W. W. Norton \& Company.
+
+\bibitem{rameau1722}
+Rameau, J. P. (1722). \textit{Traité de l'harmonie réduite à ses principes naturels}. Ballard.
+
+\bibitem{schoenberg1911}
+Schoenberg, A. (1911). \textit{Theory of Harmony}. (R. E. Carter, Trans., 1978). University of California Press.
+
+\bibitem{schoenberg1954}
+Schoenberg, A. (1954). \textit{Structural Functions of Harmony}. Williams and Norgate.
+\end{thebibliography}
+
+\end{document}
