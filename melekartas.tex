@@ -2,16 +2,15 @@
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath}
-\usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows, positioning}
 
-% Optimized TikZ styles for clear rendering in Overleaf
+% Tightened styles to reduce white space
 \tikzset{
-    startstop/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!20},
-    process/.style={rectangle, minimum width=3cm, minimum height=1cm, text width=4.5cm, align=center, draw=black, fill=orange!20},
-    decision/.style={diamond, minimum width=3.5cm, minimum height=1cm, text centered, draw=black, fill=blue!20, aspect=2},
+    startstop/.style={rectangle, rounded corners, minimum width=2.5cm, minimum height=0.8cm, text centered, draw=black, fill=red!15},
+    process/.style={rectangle, minimum width=3.5cm, minimum height=0.8cm, text width=4cm, align=center, draw=black, fill=orange!15},
+    decision/.style={diamond, minimum width=3cm, minimum height=0.8cm, text centered, draw=black, fill=blue!15, aspect=2},
     arrow/.style={thick,->,>=stealth}
 }
 
@@ -24,28 +23,28 @@
 \maketitle
 
 \section{System Overview}
-The Melakarta system represents a complete mathematical classification of the seventy-two fundamental parent scales in Carnatic music[cite: 4]. The framework is constructed through the systematic permutation of twelve semitones within a heptatonic structure[cite: 4]. This structure ensures that every possible melodic combination is accounted for within the parent scale scheme[cite: 4].
+The Melakarta system is a complete mathematical classification of the seventy-two fundamental parent scales in Carnatic music[cite: 4]. This framework is constructed through the systematic permutation of twelve semitones within a heptatonic structure to ensure every possible melodic combination is accounted for[cite: 4].
 
 \section{The Logic Flowchart}
 
 \begin{center}
-\begin{tikzpicture}[node distance=2.5cm, auto]
+\begin{tikzpicture}[node distance=1.8cm, auto]
 
-% Nodes
+% Nodes with reduced vertical spacing
 \node (start) [startstop] {Total: 72 Melakarta Ragas[cite: 4]};
-\node (dec1) [decision, below of=start, yshift=-0.5cm] {Choose Madhyama Variation[cite: 4]};
+\node (dec1) [decision, below=0.6cm of start] {Madhyama Variation[cite: 4]};
 
-\node (m1) [process, left=1cm of dec1, yshift=-1.5cm] {\textbf{Suddha Madhyama ($M_1$)} \\ Ragas 1--36[cite: 4]};
-\node (m2) [process, right=1cm of dec1, yshift=-1.5cm] {\textbf{Prati Madhyama ($M_2$)} \\ Ragas 37--72[cite: 4]};
+\node (m1) [process, below left=1cm and 0.5cm of dec1] {\textbf{Suddha Madhyama ($M_1$)} \\ Ragas 1--36[cite: 4]};
+\node (m2) [process, below right=1cm and 0.5cm of dec1] {\textbf{Prati Madhyama ($M_2$)} \\ Ragas 37--72[cite: 4]};
 
-\node (chakra) [process, below of=dec1, yshift=-4cm] {12 Chakras (6 per half) \\ Fixed Lower Tetrachord[cite: 4]};
-\node (raga) [process, below of=chakra] {6 Ragas per Chakra \\ Rotated Upper Tetrachord[cite: 4]};
-\node (final) [startstop, below of=raga] {Specific Raga Identity[cite: 4]};
+\node (chakra) [process, below=3.5cm of dec1] {12 Chakras (6 per half) \\ Fixed Lower Tetrachord[cite: 4]};
+\node (raga) [process, below=0.8cm of chakra] {6 Ragas per Chakra \\ Rotated Upper Tetrachord[cite: 4]};
+\node (final) [startstop, below=0.8cm of raga] {Specific Raga Identity[cite: 4]};
 
-% Connectors
+% Connections
 \draw [arrow] (start) -- (dec1);
-\draw [arrow] (dec1) -| node[anchor=south, xshift=2cm] {$M_1$} (m1);
-\draw [arrow] (dec1) -| node[anchor=south, xshift=-2cm] {$M_2$} (m2);
+\draw [arrow] (dec1) -| node[pos=0.3, above] {$M_1$} (m1);
+\draw [arrow] (dec1) -| node[pos=0.3, above] {$M_2$} (m2);
 \draw [arrow] (m1) |- (chakra);
 \draw [arrow] (m2) |- (chakra);
 \draw [arrow] (chakra) -- (raga);
@@ -57,12 +56,12 @@ The Melakarta system represents a complete mathematical classification of the se
 \section{Mathematical Structure}
 
 \subsection{Madhyama Division}
-The primary split divides the seventy-two scales into two groups of thirty-six based on the fourth note[cite: 4]. The first thirty-six scales use the lower frequency variation[cite: 4]. The latter thirty-six scales use the higher frequency variation[cite: 4].
+The system divides the seventy-two scales into two groups based on the fourth note[cite: 4]. The first thirty-six scales use the lower frequency variation ($M_1$), and the latter thirty-six use the higher frequency variation ($M_2$)[cite: 4].
 
 \subsection{Chakra and Swara Permutations}
-The system organizes these scales into twelve clusters known as chakras[cite: 4]. Within each chakra, the first three notes are held constant[cite: 4]. This provides a stable foundation for the lower portion of the scale[cite: 4]. To define the six individual scales within a chakra, the combinations of the sixth and seventh notes are rotated through a fixed repeating cycle[cite: 4].
+The scales are organized into twelve clusters known as chakras[cite: 4]. Within each chakra, the first three notes are held constant to provide a stable foundation[cite: 4]. The identity of each individual scale within a chakra is determined by rotating the combinations of the sixth and seventh notes through a fixed repeating cycle[cite: 4].
 
 \section*{Historical Foundation}
-This logical framework was established by historical scholars[cite: 4]. Most notably, Venkatamakhin and Govindacharya defined the naming conventions and rules for these parent ragas[cite: 4].
+This logical framework was established by historical scholars such as Venkatamakhin and Govindacharya, who defined the rules for these parent ragas[cite: 4].
 
 \end{document}
