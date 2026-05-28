@@ -1,121 +1,106 @@
-\documentclass[11pt,journal,compsoc]{IEEEtran}
+\documentclass[11pt,twocolumn]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
-\usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{cite}
-\usepackage{hyperref}
+\usepackage{microtype}
+
+\title{\textbf{The Rhythmic Tesseract: Multi-Dimensional Spatial Mapping and Permutation Engines in Complex Polymetric Audio Architectures}}
+\author{\small\textit{Audio Engine Architecture and Rhythmic Theory Research Group} \\
+\small Internal Technical Specification Monograph}
+\date{May 2026}
 
 \begin{document}
 
-\title{Non-Linear Phase Transitions and Spectral Collapse in Hyper-Kähler Bottleneck Latent Trajectories}
-
-\author{\small\textit{Department of Computational Mathematics and Signal Processing}}
-
-\markboth{Journal of Computational Acoustic Manifolds,~Vol.~14,~No.~3,~May~2026}%
-{Non-Linear Phase Transitions in Hyper-Kähler Bottleneck Latent Trajectories}
-
-\IEEEtitleabstractindextext{
-\begin{abstract}
-This paper investigates the topological and physical mappings between a constrained 4D latent trajectory and the discrete frequency domain of a non-linear signal generator. Utilizing an LSTM-driven recurrent architecture coupled with a 4D bottleneck projection layer, we map sequential high-dimensional inputs directly onto spatial control variables ($\text{frequency}$, $\text{duration}$, $\text{gain}$, $\text{cutoff}$). Through a 100-step continuous experimental run, we uncover a recurring non-linear phase transition characterized by a catastrophic collapse of spectral variance ($\sigma^2 \to 0$). We demonstrate that this spectral collapse occurs exclusively within a rigid parametric envelope where the gain-to-cutoff ratio converges precisely between $27.0$ and $27.5$ while the base frequency stabilizes near $73.8$\,Hz, forcing the discrete time-domain signal to approximate an ideal square wave.
-\end{abstract}
-\begin{IEEEkeywords}
-Manifold Optimization, Fast Fourier Transform, Latent Trajectories, Hyper-Kähler Vector Spaces, Non-Linear Distortion.
-\end{IEEEkeywords}}
-
 \maketitle
-\IEEEdisplaynontitleabstractindextext
-\IEEEpeerreviewmaketitle
+
+\begin{abstract}
+This paper presents a formal mathematical model for tracking multi-layered polymetric structures by mapping linear time signatures to three-dimensional geometric vectors. By nesting an independent polyrhythmic matrix (the inner cube) within a rigid master frame (the outer cube), we eliminate cumulative clock drift in high-priority audio threads. Furthermore, we demonstrate that structural permutations function as rotational operators within a discrete phase space, creating a dynamic, self-correcting temporal lattice.
+\end{abstract}
 
 \section{Introduction}
-\IEEEPARstart{M}{apping} continuous low-dimensional latent trajectories to high-dimensional physical signal properties represents a fundamental challenge in generative acoustic architectures. Standard recurrent networks often optimize for continuous distribution matching but fail to account for the abrupt boundary states introduced by non-linear downstream processors, such as waveshaping distortion or hard-clipping mechanisms \cite{smith2010spectral}.
+Typical digital audio workstation (DAW) metronomes treat temporal synchronization as a flat, linear timeline. While sufficient for symmetric time signatures, this approach breaks down under complex polymetric conditions where independent cyclic structures (e.g., $6/8, 3/4, 4/4$) phase simultaneously over an asymmetric baseline ($5/4$). 
 
-In this letter, we document the structural properties of a 4D manifold bottleneck, abstractly framed within a Hyper-Kähler vector space framework, as it sequentially modulates a non-linear signal generator over 100 evaluation epochs. We specifically analyze the mathematical mechanics behind a recurring phenomenon discovered in our empirical run: the wholesale collapse of Fast Fourier Transform (FFT) spectral variance at highly specific coordinate vectors.
+To manage this without compounding floating-point jitter, we formalize a spatial model—inspired by the geometric and polyphonic drum patterns popularized by Carey \cite{drumeo_carey}, the structural binary change-matrices analyzed historically by Leibniz \cite{leibniz_binary}, and the systematic permutation logic found in traditional scale classification systems \cite{venkatasubramanian_melakarta}—wherein time signatures fold into an integrated three-dimensional manifold.
 
-\section{System Architecture and Mapping Logic}
-The experimental framework consists of a recurrent sequence processor mapped to a continuous physical synthesizer module. 
-
-\subsection{Recurrent Bottleneck Projection}
-The mapping network is initialized with an input layer dimension of $d_{\text{in}} = 64$ and a hidden layer dimension of $d_{\text{hidden}} = 128$. The sequence processing is governed by a standard Long Short-Term Memory (LSTM) network, which handles temporal dependencies across an array sequence of length $T = 100$. The hidden states $h_t$ are subsequently projected into a 4D manifold bottleneck space through a linear transformation layer:
+\section{The Coordinate System}
+We define the master audio clock as a three-dimensional vector space $\mathbb{R}^3$, where any discrete audio event or transient impact point $P$ is determined by the coordinate vector:
 \begin{equation}
-\mathbf{x}_t = \mathbf{W} h_t + \mathbf{b}
-\end{equation}
-where $\mathbf{x}_t = [w, i, j, k]^T \in \mathbb{R}^4$ represents the instantaneous coordinate vector at step $t$.
-
-\subsection{Signal Generation and Non-Linear Clipping}
-The coordinate vector $\mathbf{x}_t$ directly regulates the input parameters of an acoustic signal processor. The baseline parameters—frequency ($f_t$), duration ($d_t$), gain ($g_t$), and cutoff ($c_t$)—are dynamically computed using bounded mapping transformations:
-\begin{subequations}
-\begin{align}
-f_t &= 73.42 + (20.0 \cdot |w_t|) \\
-d_t &= 0.2 + (\min(|i_t|, 1.0) \cdot 0.1) \\
-g_t &= 10.0 + (30.0 \cdot |j_t|) \\
-c_t &= 0.5 + (0.4 \cdot \sin(k_t))
-\end{align}
-\end{subequations}
-
-The resulting continuous waveform is subjected to a symmetric hard-clipping operator to induce non-linear saturation:
-\begin{equation}
-s(t) = \text{clip}(\sin(2\pi f_t t) \cdot g_t, \, -c_t, \, c_t)
+P = \begin{bmatrix} x \\ y \\ z \end{bmatrix}
 \end{equation}
 
-\section{Experimental Findings and Quantitative Metrics}
-The simulation was executed using a standardized pseudorandom normal input sequence matrix ($\mathbf{X} \sim \mathcal{N}(0, I)$) to ensure absolute baseline reproducibility. Quantitative features were extracted from the spectrum by calculating the statistical variance of the real components of the discrete Fourier transform:
+The axes map explicitly to the structural parameters of the audio engine:
+\begin{itemize}
+    \item \textbf{X-Axis (Linear Width):} The macro-tempo or global horizontal timeline, governed by the Beats Per Minute (BPM) parameter.
+    \item \textbf{Y-Axis (Vertical Density):} The concurrent layer depth, tracking stacked metric layers.
+    \item \textbf{Z-Axis (Subdivision Depth):} The discrete micro-slice phase, determined by the hyper-fine tick resolution.
+\end{itemize}
+
+\section{The Nested Cube Manifold}
+The system isolates global boundaries from local shifting ostinatos by maintaining two separate, concentric geometric frames sharing a single absolute origin point $\mathcal{O}(0,0,0)$.
+
+\subsection{The Outer Cube (Master Frame)}
+The outer container represents the foundational metric boundary (e.g., $5/4$ time). It establishes the master buffer constraints and dictates the absolute downbeat boundary $B_{\text{master}}$. The volume $V_{\text{outer}}$ of this structural frame is bounded by:
 \begin{equation}
-\text{SpecVar} = \text{Var}\left(\Re\left(\mathcal{F}\{s(t)\}\right)\right)
+V_{\text{outer}} = \{ (x,y,z) \in \mathbb{R}^3 \mid 0 \le x \le M_{\text{beats}} \}
+\end{equation}
+where $M_{\text{beats}} = 5$ in a standard asymmetric pentagonal baseline.
+
+\subsection{The Inner Cube (Polyrhythmic Matrix)}
+Suspended within $V_{\text{outer}}$ is the inner matrix generating the sub-meters ($6/8, 3/4, 4/4$). Because these inner metrics do not share divisor symmetry with the outer frame, they are mathematically modeled as a secondary coordinate system rotating relative to the primary container.
+
+The phase alignment of any inner transient point $P_{\text{inner}}$ relative to the outer container is determined by computing its spatial vector distance from the shared origin:
+\begin{equation}
+D(P) = \sqrt{(x_{\text{out}} - x_{\text{in}})^2 + (y_{\text{out}} - y_{\text{in}})^2 + (z_{\text{out}} - z_{\text{in}})^2}
 \end{equation}
 
-% Standardized to span both columns cleanly to avoid text compression
-\begin{table*}[t]
-\caption{Parametric States at Phase Transition Points}
-\label{tab:metrics}
+By resolving all threads to the absolute origin $\mathcal{O}(0,0,0)$ on every hardware callback tick, cumulative pointer drift is forced to absolute zero.
+
+\section{Permutations as Rotational Operators}
+Permutations within the inner ostinatos do not merely alter accent placements; they function as discrete rotational matrices that tilt the inner cube along the Z-axis (Depth). 
+
+Let a rhythmic cell of length $N$ micro-slices be represented as a discrete state sequence. A metric permutation shift of $\sigma$ slices corresponds to a rotation operator $\mathbf{R}_z(\theta)$ acting on the phase space, defined by:
+\begin{equation}
+\mathbf{R}_z(\theta) = \begin{bmatrix} 
+\cos\theta & -\sin\theta & 0 \\ 
+\sin\theta & \cos\theta & 0 \\ 
+0 & 0 & 1 
+\end{bmatrix}
+\end{equation}
+where the phase angle displacement $\theta$ is a function of the discrete permutation offset:
+\begin{equation}
+\theta = 2\pi \left( \frac{\sigma}{N_{\text{slices}}} \right)
+\end{equation}
+
+\begin{table}[h]
 \centering
-\begin{tabular}{lccccc}
+\small
+\caption{\small Geometric Manifestation of Rhythmic Shifts}
+\label{tab:permutations}
+\vspace{2mm}
+\begin{tabular}{p{2.2cm} p{2.8cm} p{2.4cm}}
 \toprule
-\textbf{Step} & \textbf{Frequency (Hz)} & \textbf{Gain ($g$)} & \textbf{Cutoff ($c$)} & \textbf{Gain/Cutoff Ratio} & \textbf{Spectral Variance ($\sigma^2$)} \\
+\textbf{Shift ($\sigma$)} & \textbf{Geometric Translation} & \textbf{Engine State} \\ 
 \midrule
-00 & 74.72 & 13.75 & 0.51 & 26.96 & 3342.7029 \\
-05 & 74.31 & 12.00 & 0.54 & 22.22 & 8997.7598 \\
-\textbf{36} & \textbf{73.71} & \textbf{14.55} & \textbf{0.53} & \textbf{27.45} & \textbf{14.7317} \\
-\textbf{65} & \textbf{73.88} & \textbf{13.68} & \textbf{0.50} & \textbf{27.36} & \textbf{0.1147} \\
-\textbf{69} & \textbf{73.90} & \textbf{12.96} & \textbf{0.48} & \textbf{27.00} & \textbf{0.0119} \\
+$\sigma = 0$               & Uniform Inner Alignment        & Root Phase \\ \addlinespace[0.5em]
+$\sigma = +1$              & Forward Angular Tilt           & Displaced Accent \\ \addlinespace[0.5em]
+$\sigma = +2$              & Diagonal Core Torsion          & Max Phase Drift \\ 
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
-As shown in Table \ref{tab:metrics}, typical steps demonstrate highly volatile spectral distribution values ($\sigma^2 > 3000$) due to heavy distortion odd-harmonic generation. However, a catastrophic drop in spectral variance occurs at steps 36, 65, and 69, where $\sigma^2$ approaches near absolute zero.
+When $\sigma \ne 0$, the internal corners of the inner cube spin entirely out of parallel alignment with the outer walls (Table \ref{tab:permutations}). The structural integrity of the groove is maintained exclusively by the hyper-fine micro-slices acting as tension struts between the two frames, until the macro-cycle completes and both cubes snap back to $\mathcal{O}(0,0,0)$.
 
-\section{Mathematical Analysis of Spectral Collapse}
-The sudden minimization of spectral variance indicates a fundamental geometric transformation of the discrete frequency array into a highly sparse, uniform state. 
+\begin{thebibliography}{9}
+\bibitem{drumeo_carey}
+Drumeo, \emph{Tool Drummer Danny Carey: Reasons Why He's A Rhythmic Genius}, Drumeo Editorial Network, 2023.
 
-Under normal parameters, when $g_t$ moderately exceeds $c_t$, the peaks of the sine wave are smoothly sheared, yielding a hybrid wave profile. This produces energy leakage across multiple intermediate frequency bins, maximizing the statistical variance of the real FFT array.
+\bibitem{leibniz_binary}
+G. W. Leibniz, \emph{Explication de l'Arithmétique Binaire (Explanation of Binary Arithmetic)}, Histoires de l'Académie Royale des Sciences, Paris, 1703.
 
-Conversely, a mathematical phase transition is triggered when the gain-to-cutoff ratio stabilizes within a strict boundary condition:
-\begin{equation}
-27.0 \le \frac{g_t}{c_t} \le 27.5 \quad \text{and} \quad f_t \approx 73.8\,\text{Hz}
-\end{equation}
-
-Under this specific configuration, the amplification scaling forces the slope of the zero-crossing to approach verticality relative to the discrete sampling array. The output collapses into a structurally ideal, symmetrical square wave \cite{oppenheim1999discrete}. 
-
-In discrete Fourier analysis, a pure square wave yields zero energy across all even-harmonic locations and localized intermediate bins, while the few active odd harmonics decay along a rigid fractional sequence ($1, \frac{1}{3}, \frac{1}{5}, \dots$). Because the vast majority of frequency bins are reduced to absolute zero, the statistical dispersion (variance) of the real FFT coefficients experiences immediate mathematical flatlining.
-
-Tracing these boundaries back to the 4D manifold trajectory coordinates reveals that the network triggers this transition when coordinates $j$ (gain) and $k$ (cutoff) cluster adjacent to the center origin:
-\begin{equation}
-(j, k) \to (0.0, 0.0)
-\end{equation}
-
-\section{Conclusion}
-This study demonstrated that mapping 4D manifold coordinates to physical signal variables uncovers critical non-linear bifurcations in the spectral output. By isolating the exact mathematical conditions governing the spectral collapse ($\frac{g}{c} \approx 27.3$), future works can implement manifold optimization constraints to either strictly bypass or explicitly target these uniform phase zones during continuous acoustic synthesis runs.
-
-\begin{thebibliography}{1}
-
-\bibitem{smith2010spectral}
-J.~O. Smith, \emph{Introduction to Digital Filters with Audio Applications}.\ East Computations, 2010.
-
-\bibitem{oppenheim1999discrete}
-A.~V. Oppenheim, R.~W. Schafer, and J.~R. Buck, \emph{Discrete-Time Signal Processing}.\ Prentice Hall, 1999.
-
+\bibitem{venkatasubramanian_melakarta}
+R. Venkatasubramanian, \emph{Mathematics of Melakartha Ragas in Carnatic Music}, Center for Advanced Computation and Telecommunications, 2014.
 \end{thebibliography}
 
 \end{document}
