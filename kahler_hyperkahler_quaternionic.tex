@@ -1,0 +1,268 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+
+\geometry{margin=1in}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}[definition]{Example}
+\newtheorem{remark}[definition]{Remark}
+
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{conjecture}[definition]{Conjecture}
+
+% Shortcuts
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Spin}{\mathrm{Spin}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\Hol}{\mathrm{Hol}}
+
+\title{K\"{a}hler, Hyperk\"{a}hler, and Quaternionic Geometry\\
+\large Notes from the nLab}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\newpage
+
+%------------------------------------------------------------
+\section{Overview: The Normed Division Algebra Hierarchy}
+%------------------------------------------------------------
+
+The four normed division algebras $\RR, \CC, \HH, \OO$ organize the landscape of special holonomy Riemannian manifolds. In Berger's classification, each algebra corresponds to a family of Riemannian manifolds whose holonomy group is a subgroup of the relevant structure group:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{cccc}
+\toprule
+\textbf{Algebra} $\mathbb{A}$ & \textbf{Riemannian $\mathbb{A}$-manifold} & \textbf{Special (restricted holonomy)} \\
+\midrule
+$\RR$ & Riemannian manifold & Oriented Riemannian manifold \\
+$\CC$ & K\"{a}hler manifold & Calabi--Yau manifold \\
+$\HH$ & Quaternion-K\"{a}hler manifold & Hyperk\"{a}hler manifold \\
+$\OO$ & $\Spin(7)$-manifold & $G_2$-manifold \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+
+This hierarchy is reflected in Berger's theorem on the classification of irreducible, non-symmetric Riemannian holonomy groups.
+
+%------------------------------------------------------------
+\section{K\"{a}hler Manifolds}
+%------------------------------------------------------------
+
+\begin{definition}
+A \textbf{K\"{a}hler manifold} is a Riemannian manifold $(M, g)$ of real dimension $2n$ equipped with an integrable complex structure $J$ such that:
+\begin{itemize}
+  \item $J$ is compatible with $g$: the pairing $\omega(X, Y) := g(JX, Y)$ is skew-symmetric, and
+  \item $\omega$ is closed: $d\omega = 0$.
+\end{itemize}
+Equivalently, the holonomy group $\Hol(M, g)$ is a subgroup of $\U(n)$.
+\end{definition}
+
+The 2-form $\omega$ is called the \textbf{K\"{a}hler form}. K\"{a}hler manifolds simultaneously carry Riemannian, symplectic, and complex structures, all mutually compatible.
+
+\begin{definition}
+A \textbf{Calabi--Yau manifold} is a K\"{a}hler manifold whose holonomy reduces further to $\SU(n) \subset \U(n)$. Equivalently, it is a K\"{a}hler manifold with a holomorphic volume form (trivial canonical bundle).
+\end{definition}
+
+\begin{remark}
+By the Hodge decomposition theorem, odd-degree cohomology of a compact K\"{a}hler manifold is always even-dimensional. This provides a useful obstruction: the Hopf surface $S^1 \times S^3$ is diffeomorphic to a product with odd first Betti number, hence cannot be K\"{a}hler.
+\end{remark}
+
+%------------------------------------------------------------
+\section{Hyperk\"{a}hler Manifolds}
+%------------------------------------------------------------
+
+\begin{definition}
+A \textbf{hyperk\"{a}hler manifold} is a Riemannian manifold $(M, g)$ of real dimension $4n$ equipped with three integrable complex structures $I, J, K$ each K\"{a}hler with respect to $g$, satisfying the quaternionic identities:
+\[
+I^2 = J^2 = K^2 = IJK = -1.
+\]
+Equivalently, the holonomy group $\Hol(M, g)$ is a subgroup of $\Sp(n)$.
+\end{definition}
+
+At each point $x \in M$, the tangent space $T_x M$ is a quaternionic vector space isomorphic to $\HH^n$. The group $\Sp(n)$ acts on $\HH^n$ by left-multiplication by quaternionic unitary matrices, preserving $I$, $J$, and $K$.
+
+\begin{proposition}
+Every hyperk\"{a}hler manifold is Ricci-flat, hence is a Calabi--Yau manifold (when viewed as a complex manifold via any one of the complex structures $I, J, K$).
+\end{proposition}
+
+\begin{proposition}
+A hyperk\"{a}hler manifold, considered as a complex manifold via $I$, is holomorphically symplectic: it admits a holomorphic, non-degenerate, closed $2$-form $\Omega = \omega_J + i\,\omega_K$.
+\end{proposition}
+
+\subsection{Preserved Differential Forms}
+
+The three K\"{a}hler forms $\omega_1, \omega_2, \omega_3$ associated to $I, J, K$ respectively are each parallel. The sphere
+\[
+\omega = a\,\omega_1 + b\,\omega_2 + c\,\omega_3, \quad a^2 + b^2 + c^2 = 1,
+\]
+is a whole $S^2$ worth of K\"{a}hler structures on $(M, g)$.
+
+\subsection{Compact Hyperk\"{a}hler Manifolds}
+
+The classification of compact hyperk\"{a}hler manifolds is largely open. The known examples are:
+
+\begin{example}
+The only known compact hyperk\"{a}hler manifolds (up to deformation) are:
+\begin{enumerate}
+  \item Hilbert schemes of points $X^{[n+1]}$ for $X$ a K3 surface (Beauville 1983),
+  \item Generalized Kummer varieties $(T^4)^{[n]} \to T^4$ for $X = T^4$ a 4-torus (Beauville 1983),
+  \item Two exceptional examples due to O'Grady in dimensions 10 and 6 (O'Grady 1999, 2003).
+\end{enumerate}
+\end{example}
+
+\subsection{Rozansky--Witten Weight Systems}
+
+Every hyperk\"{a}hler manifold $M$ induces a Rozansky--Witten weight system with coefficients in certain Dolbeault cohomology groups $H^{0,*}(M, \Lambda^* T^{1,0}M)$. For compact hyperk\"{a}hler manifolds, these descend to actual numerical weight systems valued in the ground field.
+
+\subsection{Physics: Coulomb and Higgs Branches}
+
+Both the Coulomb branch and the Higgs branch of $D = 3$, $\mathcal{N} = 4$ super Yang--Mills theories are hyperk\"{a}hler manifolds (Seiberg--Witten 1996). In special cases they are compact.
+
+%------------------------------------------------------------
+\section{Quaternion-K\"{a}hler Manifolds}
+%------------------------------------------------------------
+
+\begin{definition}
+A Riemannian manifold $(X, g)$ of dimension $4n$ (with $n \geq 2$) is a \textbf{quaternion-K\"{a}hler manifold} if its holonomy group is a subgroup of
+\[
+\Sp(n) \cdot \Sp(1) := (\Sp(n) \times \Sp(1))\,/\,(\mathbb{Z}/2),
+\]
+where $\Sp(1) \cong \SU(2) \cong \Spin(3)$ and the $\mathbb{Z}/2$ quotient identifies the diagonal centers.
+\end{definition}
+
+\begin{remark}
+If the holonomy further reduces to the $\Sp(n)$-factor alone, one recovers a hyperk\"{a}hler manifold. Thus hyperk\"{a}hler manifolds are the ``special'' quaternion-K\"{a}hler manifolds, in parallel with how Calabi--Yau manifolds are special K\"{a}hler manifolds.
+\end{remark}
+
+The holonomy group $\Sp(n) \cdot \Sp(1)$ does not globally preserve any particular complex structure on $TX$, but does preserve a rank-3 subbundle of $\mathrm{End}(TX)$ locally spanned by $\{I, J, K\}$ at each point. The quaternionic structure is thus defined only up to $\Sp(1)$-rotation in the fiber.
+
+\subsection{Preserved Differential Form}
+
+A quaternion-K\"{a}hler manifold carries a globally defined parallel $4$-form:
+\[
+\omega_4 = \omega_1 \wedge \omega_1 + \omega_2 \wedge \omega_2 + \omega_3 \wedge \omega_3,
+\]
+where $\omega_1, \omega_2, \omega_3$ are the local K\"{a}hler forms associated to $I, J, K$. This $4$-form is well-defined globally despite $I, J, K$ only being locally defined.
+
+\subsection{Einstein Property}
+
+\begin{proposition}
+Every quaternion-K\"{a}hler manifold is an Einstein manifold. In particular, the scalar curvature $R$ is constant.
+\end{proposition}
+
+This is a consequence of the holonomy reduction and is a strict constraint: the scalar curvature $R \in \RR$ partitions quaternion-K\"{a}hler manifolds into three cases: $R > 0$, $R = 0$, and $R < 0$.
+
+\subsection{Relation to Hyperk\"{a}hler}
+
+\begin{proposition}
+A quaternion-K\"{a}hler manifold $(X, g)$ is hyperk\"{a}hler if and only if $R(g) = 0$.
+\end{proposition}
+
+Thus hyperk\"{a}hler manifolds are precisely the Ricci-flat (equivalently, scalar-flat) quaternion-K\"{a}hler manifolds.
+
+\subsection{As Quaternionic Manifolds}
+
+\begin{proposition}
+Every quaternion-K\"{a}hler manifold is automatically a quaternionic manifold. Specifically, the Levi-Civita connection extends to a torsion-free connection on the $\Sp(n) \cdot \Sp(1)$-holonomy bundle.
+\end{proposition}
+
+Such an extension $\nabla_{\mathrm{quat}}$ is not unique: any tensor $\mathcal{S}$ valued in the first prolongation of the structure Lie algebra yields another valid connection $\nabla_{\mathrm{quat}} + \mathcal{S}$.
+
+\subsection{Characteristic Classes (Dimension 8)}
+
+\begin{proposition}
+Let $X$ be a closed smooth 8-manifold with a Spin structure and a $G$-structure for $G = \Sp(2) \cdot \Sp(1) \hookrightarrow \SO(8)$. Then the Euler class $\chi$, second Pontryagin class $p_2$, and the cup-square of the first Pontryagin class $(p_1)^2$ satisfy:
+\[
+8\chi = 4p_2 - (p_1)^2.
+\]
+\end{proposition}
+
+({\v C}adek--Van{\v z}ura 1998.) The same relation holds for $\Spin(7)$-structures.
+
+%------------------------------------------------------------
+\section{Positive Quaternion-K\"{a}hler Manifolds and Wolf Spaces}
+%------------------------------------------------------------
+
+\begin{definition}
+A quaternion-K\"{a}hler manifold $(X, g)$ is \textbf{positive} if it is geodesically complete and $R(g) > 0$.
+\end{definition}
+
+\begin{proposition}
+A connected positive quaternion-K\"{a}hler manifold is necessarily compact and simply connected. (Salamon 1982.)
+\end{proposition}
+
+\begin{proposition}
+For each dimension $4n$, there are only finitely many isometry classes of positive quaternion-K\"{a}hler manifolds. (LeBrun--Salamon 1994.)
+\end{proposition}
+
+\begin{example}[Wolf Spaces]
+The \textbf{Wolf spaces} are the positive quaternion-K\"{a}hler symmetric spaces, one in each dimension $4n$. The archetypical example is the quaternionic projective plane $\HH P^2$. All Wolf spaces are positive quaternion-K\"{a}hler manifolds.
+\end{example}
+
+\begin{conjecture}[Wolf Space Conjecture]
+In every dimension, the Wolf spaces are the only positive quaternion-K\"{a}hler manifolds.
+\end{conjecture}
+
+This conjecture has been verified in the cases:
+\begin{itemize}
+  \item $\dim = 4$: Hitchin,
+  \item $\dim = 8$: Poon--Salamon (1991), LeBrun--Salamon (1994).
+\end{itemize}
+
+%------------------------------------------------------------
+\section{Summary: Berger Classification for $\HH$-Geometry}
+%------------------------------------------------------------
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{lllc}
+\toprule
+\textbf{Manifold} & \textbf{Holonomy} & \textbf{Dimension} & \textbf{Scalar Curvature} \\
+\midrule
+Hyperk\"{a}hler & $\Sp(n)$ & $4n$ & $R = 0$ \\
+Quaternion-K\"{a}hler & $\Sp(n)\cdot\Sp(1)$ & $4n$ & $R = \mathrm{const}$ \\
+Positive qK (Wolf) & $\Sp(n)\cdot\Sp(1)$ & $4n$ & $R > 0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%------------------------------------------------------------
+\section*{References}
+%------------------------------------------------------------
+
+\begin{itemize}
+  \item Salamon, S., \textit{Quaternionic K\"{a}hler manifolds}, Invent.\ Math.\ \textbf{67} (1982), 143--171.
+  \item Beauville, A., \textit{Vari\'{e}t\'{e}s K\"{a}hleriennes dont la premi\`{e}re classe de Chern est nulle}, J.\ Diff.\ Geom.\ \textbf{18} (1983), 755--782.
+  \item Poon, Y.S.\ and Salamon, S., \textit{Quaternionic K\"{a}hler 8-manifolds with positive scalar curvature}, J.\ Differential Geom.\ \textbf{33} (1991), 363--378.
+  \item LeBrun, C.\ and Salamon, S., \textit{Strong rigidity of positive quaternion K\"{a}hler manifolds}, Invent.\ Math.\ \textbf{118} (1994), 109--132.
+  \item O'Grady, K., \textit{Desingularized moduli spaces of sheaves on a K3}, J.\ Reine Angew.\ Math.\ \textbf{512} (1999).
+  \item O'Grady, K., \textit{A new six dimensional irreducible symplectic variety}, J.\ Algebraic Geom.\ \textbf{12} (2003).
+  \item Joyce, D., \textit{Compact Manifolds with Special Holonomy}, Oxford University Press, 2000.
+  \item Besse, A., \textit{Einstein Manifolds}, Springer, 1987.
+  \item \v{C}adek, M.\ and Van\v{z}ura, J., \textit{Almost quaternionic structures on eight-manifolds}, Osaka J.\ Math.\ \textbf{35} (1998).
+  \item nLab: \href{https://ncatlab.org/nlab/show/Kähler+manifold}{K\"{a}hler manifold}, \href{https://ncatlab.org/nlab/show/hyperkähler+manifold}{hyperk\"{a}hler manifold}, \href{https://ncatlab.org/nlab/show/quaternion-Kähler+manifold}{quaternion-K\"{a}hler manifold}.
+\end{itemize}
+
+\end{document}
